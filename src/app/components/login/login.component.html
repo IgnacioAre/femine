@@ -1,0 +1,43 @@
+<main class="px-2 px-md-5" [style]="{'background-image':'url(\'../../../assets/img/fondoVioletaMovimiento.svg\')'}">
+
+
+    <section class="row px-4">
+
+        <div class="col col-12 col-sm-3 col-lg-4"></div>
+
+        <form class="col col-12 col-sm-6 col-lg-4 py-5 px-3 px-md-5 mt-4 rounded shadow" [style]="{'background-color':config.backgroundLightTransparent}" #formLogin="ngForm" (ngSubmit)="iniciarSesion()">
+            <h1 class="text-center">Inicio de sesión</h1>
+            <p>
+                <mat-form-field appearance="outline" class="w-100 mb-4" color="primary">
+                    <mat-label [ngClass]="config.textColorClass">Número de Cédula</mat-label>
+                    <input type="number" id="document" name="document" #document="ngModel" autocomplete="off" matInput [ngClass]="config.textColorClass" required [(ngModel)]="user.document">
+                    <mat-hint>Sin puntos y guión.</mat-hint>
+                    <mat-error *ngIf="!formLogin.form.valid">La cédula es obligatoria.</mat-error>
+                </mat-form-field>
+            </p>
+            <p>
+                <mat-form-field appearance="outline" class="w-100" color="primary">
+                    <mat-label [ngClass]="config.textColorClass">Contraseña</mat-label>
+                    <input [type]="(inputPassword) ? 'password' : 'text'" name="password" #password="ngModel" matInput [ngClass]="config.textColorClass" required [(ngModel)]="user.password">
+                    <button *ngIf="user.password"  type="button" matSuffix mat-icon-button aria-label="Ver contraseña" (click)="inputPassword = !inputPassword">
+                        <img [src]="(inputPassword) ? '../../../assets/img/ojo.svg' : '../../../assets/img/ojo_tachado.svg'" [alt]="(inputPassword) ? 'Ver contraseña' : 'Ocultar contraseña' ">
+                    </button>
+                    <mat-error *ngIf="!formLogin.form.valid">La contraseña es obligatoria.</mat-error>
+                </mat-form-field>
+            </p>
+    
+            <mat-checkbox name="saveUser" #saveUser="ngModel" color="primary" [(ngModel)]="user.saveUser"><span [ngClass]="config.textColorClass">Recordar cédula</span></mat-checkbox>
+    
+            <div class="row mx-1 mx-md-0">
+                <div class="col col-12 col-sm-3"></div>
+                <button mat-raised-button color="primary" type="submit" id="botonLogin" class="col col-12 col-sm-6 fs-4 mt-3" [ngClass]="{'buttonDisabled' : !formLogin.form.valid}" style="height: 60px;">Acceder</button>
+                <div class="col col-12 col-sm-3"></div>
+            </div>
+          </form>
+
+          <div class="col col-12 col-sm-3 col-lg-4 d-flex align-items-end">
+            <img src="../../../assets/img/login_{{config.colors}}.svg" data-aos="zoom-in-right" data-aos-delay="300"  alt="Ilustración de Login" class="d-none d-md-block">
+          </div>
+    </section>
+
+</main>

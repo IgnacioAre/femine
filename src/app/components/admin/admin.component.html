@@ -1,0 +1,31 @@
+<main [style]="{'background-image':'url(\'../../../assets/img/fondoVioletaMovimiento.svg\')'}">
+
+
+    <section class="shadow mx-4 bg-light rounded overflow-hidden">
+
+        <h1 class="mb-4 py-3 ps-4 fs-1 text-light" [style]="{'background-color':config.backgroundTitle,'border-bottom':'5px solid '+config.baseColorDark}">Panel de administración</h1>
+
+
+        <div class="row">
+
+            <!-- Opciones del administrador -->
+            <div class="col col-12 col-md-6 px-4 px-md-0">
+                <a id="elementoClientes" [style]="{'background-color':config.baseColorLight,'box-shadow':'0px 0px 10px ' + config.baseColorLight}" #elementoClientes (mouseenter)="adminOptionHover(elementoClientes.id)" (mouseleave)="adminOptionLeave(elementoClientes.id)" routerLink="/admin/gestion-clientes" class="adminOption d-block text-center my-4 py-4 text-decoration-none m-auto fs-2 {{config.textColorClass}}">Gestionar Clientes</a>
+                <a id="elementoTarjetas" [style]="{'background-color':config.baseColorLight,'box-shadow':'0px 0px 10px ' + config.baseColorLight}" #elementoTarjetas (mouseenter)="adminOptionHover(elementoTarjetas.id)" (mouseleave)="adminOptionLeave(elementoTarjetas.id)" routerLink="/admin/gestion-tarjetas" class="adminOption d-block text-center my-4 py-4 text-decoration-none m-auto fs-2 {{config.textColorClass}}">Gestionar Tarjetas</a>
+            </div>
+
+            <div class="col col-12 col-md-6">
+                <img src="../../../assets/img/admin_{{config.colors}}.svg" data-aos="zoom-out-up" data-aos-delay="300" class="d-none d-md-block" alt="Ilustracion de Administración">
+            </div>
+
+        </div>        
+
+    </section>
+
+
+
+    <div *ngIf="config.userRol != 'ADMIN'">
+        <h1>No tienes permisos para acceder a esta página.</h1>
+    </div>
+
+</main>

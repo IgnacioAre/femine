@@ -1,0 +1,64 @@
+<main [style]="{'background-image':'url(\'../../../assets/img/fondoVioletaMovimiento.svg\')'}">
+
+    <section *ngIf="config.userRol == 'ADMIN'" class="row px-4">
+
+        <div class="col col-12 col-sm-3 col-lg-4"></div>
+
+        <form class="col col-12 col-sm-6 col-lg-4 py-5 px-3 px-md-5 rounded shadow position-relative" [style]="{'background-color':config.backgroundLightTransparent}" #formRegister="ngForm" (ngSubmit)="registrarse(formRegister)">
+            
+            <span routerLink="/admin/gestion-clientes" class="arrowBack text-light" matTooltip="Volver" matTooltipPosition="left" [style]="{'background-color':config.baseColorLight}">⤶</span>
+
+            <h1 class="text-center mb-3">Registrar cliente</h1>
+            <p>
+                <mat-form-field appearance="outline" class="w-100" color="primary">
+                    <mat-label [ngClass]="config.textColorClass">Nombre</mat-label>
+                    <input type="text" name="name" #name="ngModel" autocomplete="off" matInput [ngClass]="config.textColorClass" required [(ngModel)]="user.name">
+                    <mat-error *ngIf="!formRegister.form.valid">El nombre es obligatorio.</mat-error>
+                </mat-form-field>
+            </p>
+            <p>
+                <mat-form-field appearance="outline" class="w-100" color="primary">
+                    <mat-label [ngClass]="config.textColorClass">Apellido</mat-label>
+                    <input type="text" name="subname" #subname="ngModel" autocomplete="off" matInput [ngClass]="config.textColorClass" [(ngModel)]="user.subname">
+                </mat-form-field>
+            </p>
+            <p>
+                <mat-form-field appearance="outline" class="w-100" color="primary">
+                    <mat-label [ngClass]="config.textColorClass">Número de Cédula</mat-label>
+                    <input type="number" name="document" #document="ngModel" autocomplete="off" matInput [ngClass]="config.textColorClass" required [(ngModel)]="user.document">
+                    <mat-hint>Sin puntos y guión.</mat-hint>
+                    <mat-error *ngIf="!formRegister.form.valid">La cédula es obligatoria.</mat-error>
+                </mat-form-field>
+            </p>
+            <p>
+                <mat-form-field appearance="outline" class="w-100" color="primary">
+                    <mat-label [ngClass]="config.textColorClass">Contraseña</mat-label>
+                    <input [type]="(inputPassword) ? 'password' : 'text'" name="password" #password="ngModel" matInput [ngClass]="config.textColorClass" required [(ngModel)]="user.password">
+                    <button *ngIf="user.password"  type="button" matSuffix mat-icon-button aria-label="Ver contraseña" (click)="inputPassword = !inputPassword">
+                        <img [src]="(inputPassword) ? '../../../assets/img/ojo.svg' : '../../../assets/img/ojo_tachado.svg'" [alt]="(inputPassword) ? 'Ver contraseña' : 'Ocultar contraseña' ">
+                    </button>
+                    <mat-error *ngIf="!formRegister.form.valid">La contraseña es obligatoria.</mat-error>
+                </mat-form-field>
+            </p>
+            <div class="mensajeExitoso" *ngIf="clienteCreado">
+                Cliente creado correctamente.
+                <span (click)="clienteCreado = false">X</span>
+            </div>
+    
+            <div class="row mt-2 mx-1 mx-md-0">
+                <div class="col col-12 col-sm-3"></div>
+                <button mat-raised-button color="primary" type="submit" class="col col-12 col-sm-6 fs-4 mt-3" style="height: 60px;" [ngClass]="{'buttonDisabled' : !formRegister.form.valid}" id="botonRegistrarse">Registrar</button>
+                <div class="col col-12 col-sm-3"></div>
+            </div>
+          </form>
+
+          <div class="col col-12 col-sm-3 col-lg-4 d-flex align-items-end">
+            <img src="../../../assets/img/register_{{config.colors}}.svg" data-aos="zoom-in-right" data-aos-delay="300"  alt="Ilustración de Registro" class="d-none d-md-block">
+          </div>
+    </section>
+
+    <div *ngIf="config.userRol != 'ADMIN'">
+        <h1>No tienes permisos para acceder a esta página.</h1>
+    </div>
+
+</main>

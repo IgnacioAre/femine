@@ -1,0 +1,227 @@
+<main [style]="{'background-image':'url(\'../../../assets/img/fondoVioletaMovimiento.svg\')'}">
+
+    <div class="portadaFotos d-flex flex-wrap">
+         <picture>
+            <img class="fotoPortada border-end border-bottom" id="fotoPortada_1" data-aos="fade-up" data-aos-delay="300" src="../../../assets/img/foto_portada_1.png" alt="Foto de alisado">
+        </picture>
+        <picture>
+            <img class="fotoPortada border-start border-end border-bottom" id="fotoPortada_2" data-aos="fade-up" data-aos-delay="500" src="../../../assets/img/foto_portada_2.png" alt="Foto de rulos en pelo negro">
+        </picture>
+        <picture>
+            <img class="fotoPortada border-start border-bottom" id="fotoPortada_3" data-aos="fade-up" data-aos-delay="700" src="../../../assets/img/foto_portada_3.png" alt="Foto de rulos y balayage">
+        </picture>
+    </div>
+
+    <div [style]="{'background-color':config.backgroundTransparent}" class="menuContacto py-4 px-2 px-lg-5 d-flex justify-content-between align-items-center flex-wrap border-top">
+        
+        <h2 class="pt-3">
+            ✨ <span>Verse Bien Para Sentirse Bien</span> ✨
+        </h2>
+
+        <div class="d-flex justify-content-end align-items-center flex-wrap pb-4 pb-md-0">
+            <a class="d-flex justify-content-center align-items-center button m-auto me-md-3 mt-md-0 text-light" [style]="{'background-color':config.baseColorDark,'box-shadow':'0px 0px 10px ' + config.baseColorDark}" href="https://www.instagram.com/feminebeautysalon/" target="_blank">
+                <img src="../../../assets/img/instagram.png" alt="Instagram" width="28px" class="me-2">
+                Instagram
+            </a>
+    
+            <a class="d-flex justify-content-center align-items-center button m-auto me-md-3 mt-2 mt-md-0 text-light" [style]="{'background-color':config.baseColorDark,'box-shadow':'0px 0px 10px ' + config.baseColorDark}" href="https://wa.me/+59899900913" target="_blank">
+                <img src="../../../assets/img/whatsapp.png" alt="Whatsapp" width="28px" class="me-2">
+                Whatsapp
+            </a>
+    
+            <a class="d-flex justify-content-center align-items-center m-auto m-md-0 mt-2 mt-md-0 button text-light" [style]="{'background-color':config.baseColorDark,'box-shadow':'0px 0px 10px ' + config.baseColorDark}" href="https://maps.app.goo.gl/J1qrHecpxn2hmK547?g_st=ic" target="_blank">
+                <img src="../../../assets/img/mapa.png" alt="Ubicación" width="28px" class="me-2">
+                Como llegar
+            </a>
+        </div>
+
+    </div>
+
+
+    <div class="row p-2 p-md-5 mt-3 mt-md-0">
+
+        <section class="col col-12 col-md-7">
+
+            <article class="bg-light shadow rounded p-4" [style]="{'border':'4px dashed ' + config.baseColorLight}">
+                <h2>¿Quién soy?</h2>
+                <p>
+                    Mi nombre es Geraldine, me recibi en 2022 de peluquera/maquilladora y en marzo de 2023 tuve la linda oportunidad de poder abrir mi salón, estoy feliz de mostrarles mis trabajos y logros para que puedan ser parte de este proceso. Son bienvenida/os a darse un mimo 💗
+                </p>
+            </article>
+
+            <article class="bg-light shadow rounded p-4 mt-4" [style]="{'border':'4px dashed ' + config.baseColorLight}">
+                <h2>Me preocupo por tí 🥰</h2>
+                <p>
+                    En mi peluquería, me preocupo por tu comodidad y satisfacción. Te ofrecezco un ambiente acogedor y relajante donde puedes disfrutar de un momento de mimos y cuidado personal.
+                </p>
+            </article>
+
+            <article class="shadow rounded p-4 mt-4 fondoServicios">
+                <h2 class="text-light">Servicios</h2>
+
+                <div class="row">
+
+                    <div class="col col-12 col-lg-6 bg-light shadow rounded p-4 m-auto mt-3 cardServicio">
+                        <h3>Tintas</h3>
+                        <img src="../../../assets/img/servicios/servicio_tinta.png" alt="">
+                    </div>
+                    
+                    <div class="col col-12 col-lg-6 bg-light shadow rounded p-4 m-auto mt-3 cardServicio">
+                        <h3>Colores</h3>
+                        <img src="../../../assets/img/servicios/servicio_color.png" alt="">
+                    </div>
+
+                    <div class="col col-12 col-lg-6 bg-light shadow rounded p-4 m-auto mt-3 cardServicio">
+                        <h3>Cortes de pelo mujer</h3>
+                        <img src="../../../assets/img/servicios/servicio_corte_mujer.png" alt="">
+                    </div>
+    
+                    <div class="col col-12 col-lg-6 bg-light shadow rounded p-4 m-auto mt-3 cardServicio">
+                        <h3>Cortes de pelo hombre</h3>
+                        <img src="../../../assets/img/servicios/servicio_corte_hombre.png" alt="">
+                    </div>
+
+                    <div class="col col-12 col-lg-6 bg-light shadow rounded p-4 m-auto mt-3 cardServicio">
+                        <h3>Peinados</h3>
+                        <img src="../../../assets/img/servicios/servicio_peinado.jpg" alt="">
+                    </div>
+    
+                    <div class="col col-12 col-lg-6 bg-light shadow rounded p-4 m-auto mt-3 cardServicio">
+                        <h3>Trenzas cocidas</h3>
+                        <img src="../../../assets/img/servicios/servicio_trenza.png" alt="">
+                    </div>
+    
+                    <div class="col col-12 col-lg-6 bg-light shadow rounded p-4 m-auto mt-3 cardServicio">
+                        <h3>Alisados</h3>
+                        <img src="../../../assets/img/servicios/servicio_alisado.png" alt="">
+                    </div>
+
+                    <div class="col col-12 col-lg-6 bg-light shadow rounded p-4 m-auto mt-3 cardServicio">
+                        <h3>Hidratacion</h3>
+                        <div id="carouselServicioHidratacion" class="carousel slide" data-bs-ride="true">
+                            <div class="carousel-indicators">
+                              <button type="button" data-bs-target="#carouselServicioHidratacion" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                              <button type="button" data-bs-target="#carouselServicioHidratacion" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                            </div>
+                            <div class="carousel-inner">
+                              <div class="carousel-item active">
+                                <img class="d-block w-100" src="../../../assets/img/servicios/servicio_hidratacion_1.png" alt="">
+                              </div>
+                              <div class="carousel-item">
+                                <img class="d-block w-100" src="../../../assets/img/servicios/servicio_hidratacion_2.png" alt="">
+                              </div>
+                            </div>
+                            <button class="carousel-control-prev" type="button" data-bs-target="#carouselServicioHidratacion" data-bs-slide="prev">
+                              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                              <span class="visually-hidden">Previous</span>
+                            </button>
+                            <button class="carousel-control-next" type="button" data-bs-target="#carouselServicioHidratacion" data-bs-slide="next">
+                              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                              <span class="visually-hidden">Next</span>
+                            </button>
+                          </div>
+
+                    </div>
+    
+                    <div class="col col-12 col-lg-6 bg-light shadow rounded p-4 m-auto mt-3 cardServicio">
+                        <h3>Maquillaje</h3>
+                        <img src="../../../assets/img/servicios/servicio_maquillaje.png" alt="">
+                    </div>
+
+                    <div class="col col-12 col-lg-6 bg-light shadow rounded p-4 m-auto mt-3 cardServicio">
+                        <h3>Balayage</h3>
+                        <img src="../../../assets/img/servicios/servicio_balayage.png" alt="">
+                    </div>
+
+                </div>
+            
+            </article>
+    
+        </section>
+    
+    
+        <aside class="col col-12 col-md-5 mt-4 mt-md-0">
+
+            <article class="bg-light shadow rounded p-4" [style]="{'border':'4px dashed ' + config.baseColorLight}">
+                <h2>Medios de pago</h2>
+                <p>
+                    <img src="../../../assets/img/dinero.png" alt="Dinero efectivo" width="28px" class="me-2">
+                    Efectivo
+                </p>
+            </article>
+
+            <article class="bg-light shadow rounded p-4 mt-4" [style]="{'border':'4px dashed ' + config.baseColorLight}">
+                <h2>¿Dónde me ubico?</h2>
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3406.6674066610985!2d-57.97284652421337!3d-31.3681559939217!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95adc2dd75530469%3A0xd15e1a20c6ee6f49!2sDr.%20Chiazzaro%201888%2C%2050000%20Salto%2C%20Departamento%20de%20Salto!5e0!3m2!1ses-419!2suy!4v1702690700245!5m2!1ses-419!2suy" width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                <div class="row mt-2">
+                    <span class="col col-12 col-md-8">Chiazzaro 1888, 50000 Salto Departamento de Salto, Uruguay</span>
+                    <a class="col col-12 col-md-4 d-flex justify-content-center align-items-center button mt-2 mt-md-0 text-light" [style]="{'background-color':config.baseColorDark,'box-shadow':'0px 0px 10px ' + config.baseColorDark}" href="https://maps.app.goo.gl/JacpTi91K16J6JCi8" target="_blank">Como llegar</a>
+                </div>
+            </article>
+
+            <article class="bg-light shadow rounded p-4 mt-4" [style]="{'border':'4px dashed ' + config.baseColorLight}">
+                <h2>Información General</h2>
+                <p class="d-flex align-items-center">
+                    <img src="../../../assets/img/calendario.png" alt="Horario" width="28px" class="me-2">
+                    <span class="me-2">Trabajamos por agenda. <a href="https://wa.me/+59899900913" class="text-dark" target="_blank">Pedí tu reserva aquí</a></span>
+                </p>
+                <p class="d-flex align-items-center">
+                    <img src="../../../assets/img/reloj.png" alt="Horario" width="28px" class="me-2">
+                    <span class="me-2">Horarios:</span>
+                    <span class="text-secondary">09:00 - 13:00 y 15:00 - 19:00</span>
+                </p>
+                <p class="d-flex align-items-center">
+                    <img src="../../../assets/img/telefono.png" alt="Teléfono" width="28px" class="me-2">
+                    <span class="me-2">Teléfono:</span>
+                    <span class="text-secondary"><a class="text-secondary text-decoration-none" href="https://wa.me/+59899900913" target="_blank">099 900 913</a></span>
+                </p>
+                <p class="d-flex align-items-center">
+                    <img src="../../../assets/img/instagram.png" alt="Teléfono" width="28px" class="me-2">
+                    <span class="me-2">Instagram:</span>
+                    <span><a class="text-secondary text-decoration-none" href="https://www.instagram.com/feminebeautysalon/" target="_blank">@feminebeautysalon</a></span>
+                </p>
+            </article>
+
+        </aside>
+
+    </div>
+
+
+    <div id="carouselPortada" class="carousel carousel-portada slide d-none" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+            <button id="indicadorPortada1" type="button" data-bs-target="#carouselPortada" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+            <button id="indicadorPortada2" type="button" data-bs-target="#carouselPortada" data-bs-slide-to="1" aria-label="Slide 2"></button>
+            <button id="indicadorPortada3" type="button" data-bs-target="#carouselPortada" data-bs-slide-to="2" aria-label="Slide 3"></button>
+        </div>
+        <div class="carousel-inner">
+            <div id="imgCarouselPortada1" class="carousel-item active">
+                <div class="contenedorImg">
+                    <span class="btnClose closePortada"><img src="../../../assets/img/close.png" style="filter: drop-shadow(0px 0px 1px #fff);" matTooltip="Cerrar" alt="Close"></span>
+                    <img src="../../../assets/img/foto_portada_1.png" class="d-block" alt="Foto de alisado">
+                </div>
+            </div>
+            <div id="imgCarouselPortada2" class="carousel-item">
+                <div class="contenedorImg">
+                    <span class="btnClose closePortada"><img src="../../../assets/img/close.png" style="filter: drop-shadow(0px 0px 1px #fff);" matTooltip="Cerrar" alt="Close"></span>
+                    <img src="../../../assets/img/foto_portada_2.png" class="d-block" alt="Foto de rulos en pelo negro">
+                </div>
+            </div>
+            <div id="imgCarouselPortada3" class="carousel-item">
+                <div class="contenedorImg">
+                    <span class="btnClose closePortada"><img src="../../../assets/img/close.png" style="filter: drop-shadow(0px 0px 1px #fff);" matTooltip="Cerrar" alt="Close"></span>
+                    <img src="../../../assets/img/foto_portada_3.png" class="d-block" alt="Foto de rulos y balayage">
+                </div>
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselPortada" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselPortada" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+    
+
+</main>

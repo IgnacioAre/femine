@@ -1,0 +1,64 @@
+<main [style]="{'background-image':'url(\'../../../assets/img/fondoVioletaMovimiento.svg\')'}">
+
+
+    <section class="shadow mx-4 bg-light rounded overflow-hidden">
+
+        <h1 class="mb-4 py-3 ps-4 fs-2 text-light" [style]="{'background-color':config.backgroundTitle,'border-bottom':'5px solid '+config.baseColorDark}"><a routerLink="/admin" [style]="{'color':config.baseColorLight}">Administración</a> / Gestión de Tarjetas</h1>
+
+
+        <div class="row pb-5">
+
+            <div class="col col-12">
+
+                <a id="elementoRegistrarCliente" class="adminOption d-block w-50 text-center my-4 py-4 text-decoration-none m-auto fs-2 {{config.textColorClass}}" routerLink="/admin/registrar-cliente" [style]="{'background-color':config.baseColorLight,'box-shadow':'0px 0px 10px ' + config.baseColorLight}" #elementoRegistrarCliente (mouseenter)="adminOptionHover(elementoRegistrarCliente.id)" (mouseleave)="adminOptionLeave(elementoRegistrarCliente.id)">Crear Tarjeta</a>
+
+                <br>
+
+                <table class="table table-striped table-secondary w-75 m-auto" [ngClass]="{'table-default' : config.colors == 'violet','table-secondary' : config.colors == 'dark'}" [style]="{'box-shadow':'0px 0px 10px ' + config.baseColorLight}">
+                    <thead>
+                        <tr>
+                            <th>Título</th>
+                            <th>Descripción</th>
+                            <th>Duración</th>
+                            <th>Estrellas</th>
+                            <th style="width: 120px"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td colspan="5" class="text-center">Cargando <img src="../../../assets/img/loader_{{config.colors}}.svg" alt="Loader" width="32px"></td>
+                            <!-- <td>Prueba</td>
+                            <td>Prueba</td>
+                            <td>Prueba</td>
+                            <td>Prueba</td>
+                            <td>
+                                <div class="btn-group">
+                                    <button class="btn btn-light btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                      Acciones
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="#">Modificar</a></li>
+                                        <li><a class="dropdown-item" href="#">Eliminar</a></li>
+                                    </ul>
+                                </div>
+                            </td> -->
+                        </tr>
+
+                    </tbody>
+                </table>
+
+            </div>
+
+        </div>
+
+        
+
+    </section>
+
+
+
+    <div *ngIf="config.userRol != 'ADMIN'">
+        <h1>No tienes permisos para acceder a esta página.</h1>
+    </div>
+
+</main>
