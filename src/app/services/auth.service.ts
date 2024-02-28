@@ -20,7 +20,7 @@ export class AuthService {
 
     login(document: string, password: string, save: boolean): any {
         
-        let response = '';
+        let response:any = [];
 
         $.ajax({
             url: apiUrl + 'user-login',
@@ -33,7 +33,8 @@ export class AuthService {
             dataType: 'JSON',
             success: (res:string, textStatus: string, jqXHR: any) => {
 
-                response = jqXHR;
+                response['msg'] = res;
+                response['status'] = jqXHR.status;
 
                 if(jqXHR.status === 200){
 
@@ -59,8 +60,8 @@ export class AuthService {
                 
             },
             error: (jqXHR:any, textStatus:any)=>{
-                console.log('Error en la consulta: '+textStatus);
-                response = 'Error';
+                response['msg'] = 'Error en la consulta: '+textStatus;
+                response['status'] = 400;
             }
         });
 
@@ -69,7 +70,7 @@ export class AuthService {
 
     register(name: string,subname: string,document: string,password: string): any {
         
-        let response = '';
+        let response:any = [];
 
         $.ajax({
             url: apiUrl + 'user-register',
@@ -82,12 +83,13 @@ export class AuthService {
                 password: password
             },
             dataType: 'JSON',
-            success: (res:any) => {
-                response = res;
+            success: (res:string, textStatus: string, jqXHR: any) => {
+                response['msg'] = res;
+                response['status'] = jqXHR.status;
             },
-            error: (jqXHR:any, textStatus:any)=>{
-                console.log('Error en la consulta: '+textStatus);
-                response = 'Error';
+            error: (res:any, textStatus:any)=>{
+                response['msg'] = 'Error en la consulta: '+textStatus;
+                response['status'] = 400;
             }
         });
 
@@ -97,7 +99,7 @@ export class AuthService {
 
     updateUser(id: number,name: string,subname: string): any {
 
-        let response = '';
+        let response:any = [];
 
         $.ajax({
             url: apiUrl + 'user-update',
@@ -109,12 +111,13 @@ export class AuthService {
                 subname: subname
             },
             dataType: 'JSON',
-            success: (res:any) => {
-                response = res;
+            success: (res:string, textStatus: string, jqXHR: any) => {
+                response['msg'] = res;
+                response['status'] = jqXHR.status;
             },
             error: (jqXHR:any, textStatus:any)=>{
-                console.log('Error en la consulta: '+textStatus);
-                response = 'Error';
+                response['msg'] = 'Error en la consulta: '+textStatus;
+                response['status'] = 400;
             }
         });
 
@@ -122,10 +125,37 @@ export class AuthService {
 
     }
 
+    deleteUser(id: number): any {
+
+        let response:any = [];
+
+        $.ajax({
+            url: apiUrl + 'user-delete',
+            method: 'POST',
+            async: false,
+            data: {
+                id: id,
+            },
+            dataType: 'JSON',
+            success: (res:string, textStatus: string, jqXHR: any) => {
+                response['msg'] = res;
+                response['status'] = jqXHR.status;
+            },
+            error: (jqXHR:any, textStatus:any)=>{
+                response['msg'] = 'Error en la consulta: '+textStatus;
+                response['status'] = 400;
+            }
+        });
+
+        return response;
+
+
+    }
+
 
     getUserByToken(token: string | null){
         
-        let response: object = [];
+        let response: any = [];
         
         $.ajax({
             url: apiUrl + 'get-user',
@@ -137,9 +167,7 @@ export class AuthService {
             dataType: 'JSON',
             success: (res:any, textStatus: string, jqXHR: any) => {
 
-                response = [];
-
-                if(jqXHR.status === 200){    
+                if(jqXHR.status === 200){
 
                     this.storageService.setUser(res);
                         
@@ -178,9 +206,9 @@ export class AuthService {
         return this.storageService.getUser();
     }
 
-    getUsersList() {        
+    getUsersList() {
         
-        let response: object = [];
+        let response: any = [];
         
         $.ajax({
             url: apiUrl + 'get-users-list',
@@ -189,12 +217,8 @@ export class AuthService {
             dataType: 'JSON',
             success: (res:any, textStatus: string, jqXHR: any) => {
 
-                response = [];
-
-                if(jqXHR.status === 200){    
-                        
+                if(jqXHR.status === 200){
                     response = res;
-                    
                 }
                 
             },
@@ -204,6 +228,119 @@ export class AuthService {
             }
         });
         
+        return response;
+
+    }
+
+
+    getCardsList() {
+        
+        let response: any = [];
+        
+        $.ajax({
+            url: apiUrl + 'get-cards-list',
+            method: 'GET',
+            async: false,
+            dataType: 'JSON',
+            success: (res:any, textStatus: string, jqXHR: any) => {
+                
+                if(jqXHR.status === 200){
+                    response = res;
+                }
+                
+            },
+            error: (jqXHR:any, textStatus:any)=>{
+                console.log('Error en la consulta: '+textStatus);
+                response = [];
+            }
+        });
+        
+        return response;
+
+    }
+
+    updateCard(id: number,title: string,desc: string, duration: number, stars: number): any {
+
+        let response:any = [];
+
+        $.ajax({
+            url: apiUrl + 'card-update',
+            method: 'POST',
+            async: false,
+            data: {
+                id: id,
+                title: title,
+                desc: desc,
+                duration: duration,
+                stars: stars
+            },
+            dataType: 'JSON',
+            success: (res:string, textStatus: string, jqXHR: any) => {
+                response['msg'] = res;
+                response['status'] = jqXHR.status;
+            },
+            error: (jqXHR:any, textStatus:any)=>{
+                response['msg'] = 'Error en la consulta: '+textStatus;
+                response['status'] = 400;
+            }
+        });
+
+        return response;
+
+    }
+
+
+    deleteCard(id: number): any {
+
+        let response:any = [];
+
+        $.ajax({
+            url: apiUrl + 'card-delete',
+            method: 'POST',
+            async: false,
+            data: {
+                id: id,
+            },
+            dataType: 'JSON',
+            success: (res:string, textStatus: string, jqXHR: any) => {
+                response['msg'] = res;
+                response['status'] = jqXHR.status;
+            },
+            error: (jqXHR:any, textStatus:any)=>{
+                response['msg'] = 'Error en la consulta: '+textStatus;
+                response['status'] = 400;
+            }
+        });
+
+        return response;
+
+    }
+
+    createCard(title: string,desc: string, duration: number, stars: number): any {
+        
+        let response:any = [];
+
+        $.ajax({
+            url: apiUrl + 'card-create',
+            method: 'POST',
+            async: false,
+            data: {
+                title: title,
+                desc: desc,
+                duration: duration,
+                stars: stars
+            },
+            dataType: 'JSON',
+            success: (res:string, textStatus: string, jqXHR: any) => {
+                response['msg'] = res;
+                response['status'] = jqXHR.status;
+            },
+            error: (res:any, textStatus:any)=>{
+                response['msg'] = 'Error en la consulta: '+textStatus;
+                response['status'] = 400;
+            }
+        });
+
         return response;
 
     }

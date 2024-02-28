@@ -20,6 +20,7 @@ import { AdminComponent } from './components/admin/admin.component';
 import { TarjetasComponent } from './components/tarjetas/tarjetas.component';
 import { GestionUsuariosComponent } from './components/gestion-usuarios/gestion-usuarios.component';
 import { GestionTarjetasComponent } from './components/gestion-tarjetas/gestion-tarjetas.component';
+import { CreateCardComponent } from './components/create-card/create-card.component';
 
 
 @NgModule({
@@ -32,7 +33,8 @@ import { GestionTarjetasComponent } from './components/gestion-tarjetas/gestion-
     AdminComponent,
     TarjetasComponent,
     GestionUsuariosComponent,
-    GestionTarjetasComponent
+    GestionTarjetasComponent,
+    CreateCardComponent
   ],
   imports: [
     BrowserModule,

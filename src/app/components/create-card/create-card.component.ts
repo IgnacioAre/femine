@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { CardCreate } from 'src/app/models/cadCreate';
 import { Configuracion } from 'src/app/models/configuracion';
-import { UserRegister } from 'src/app/models/userRegister';
 import { AuthService } from 'src/app/services/auth.service';
 
 declare const $: any;
@@ -9,20 +9,20 @@ declare const AOS: any;
 declare const Swal: any;
 
 @Component({
-  selector: 'app-register',
-  templateUrl: './register.component.html',
-  styleUrls: ['./register.component.scss']
+  selector: 'app-create-card',
+  templateUrl: './create-card.component.html',
+  styleUrls: ['./create-card.component.scss']
 })
-export class RegisterComponent implements OnInit {
+export class CreateCardComponent implements OnInit {
 
   public config:any = Configuracion;
-  public user: UserRegister;
+  public card: CardCreate;
   public selectedValue: string = '';
-  public clienteCreado = false;
+  public cardCreated = false;
   public inputPassword = true;
 
   constructor(private _router: Router, private authService: AuthService){
-    this.user = new UserRegister('','','','');
+    this.card = new CardCreate('','','','');
   }
 
   ngOnInit(): void {
@@ -40,33 +40,37 @@ export class RegisterComponent implements OnInit {
   }
 
 
-  public registrarse(form: any){
+  public create(form: any){
 
-    let name = this.user.name.toString();
-    let subname = this.user.subname.toString();
-    let document = this.user.document.toString();
-    let password = this.user.password.toString();
+    let title = this.card.title.toString();
+    let desc = this.card.desc.toString();
+    let duration = this.card.duration;
+    let stars = this.card.stars;
 
 
-    if(!$('#botonRegistrarse').hasClass('buttonDisabled')){
-
-      let ci_validada = this.authService.validate_ci(document);
+    if(!$('#btnCreate').hasClass('buttonDisabled')){
   
-      if(!ci_validada){
+      if(duration === 0){
         Swal.fire({
           title: "Error",
-          text: 'El número de cédula no es válido, intente nuevamente.'
+          text: 'Los días de duración es obligatorio, intente nuevamente.'
         });
         return;
       }
 
-      let res = this.authService.register(name,subname,document,password);
-    
-      console.log(res);
+      if(stars === 0){
+        Swal.fire({
+          title: "Error",
+          text: 'El número de estrellas es obligatorio, intente nuevamente.'
+        });
+        return;
+      }
+
+      let res = this.authService.createCard(title,desc,duration,stars);
       
       if(res['status'] === 200){
         form.resetForm();
-        this.clienteCreado = true;
+        this.cardCreated = true;
       }else if(res['status'] === 202){
         Swal.fire({
           title: "Error",
@@ -85,6 +89,5 @@ export class RegisterComponent implements OnInit {
     }
 
   }
-
 
 }

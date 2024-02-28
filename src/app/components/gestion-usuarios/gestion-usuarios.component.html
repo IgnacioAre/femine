@@ -25,17 +25,21 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr *ngIf="usersCount == 0">
-                                <td colspan="4" class="text-center">Cargando <img src="../../../assets/img/loader_{{config.colors}}.svg" alt="Loader" width="32px"></td>
+                            <tr *ngIf="usersCount == -1">
+                                <td colspan="4" class="text-center">Cargando <img src="../../../assets/img/loader_violet.svg" alt="Loader" width="32px"></td>
                             </tr>
     
+                            <tr *ngIf="usersCount == 0">
+                                <td colspan="4" class="text-center">No se han encontrado resultados.</td>
+                            </tr>
+
                             <tr class="dtr-control" *ngFor="let user of users">
                                 <td>{{user.name}}</td>
                                 <td>{{user.subname}}</td>
                                 <td>{{user.document}}</td>
                                 <td>
                                     <i (click)="editUser(user.id,user.name,user.subname)" role="button" class="bi bi-pencil-square fs-4 me-3"></i>
-                                    <i role="button" class="bi bi-trash fs-4"></i>
+                                    <i (click)="deleteUser(user.id,user.name,user.subname)" role="button" class="bi bi-trash fs-4"></i>
                                 </td>
                             </tr>
                         </tbody>

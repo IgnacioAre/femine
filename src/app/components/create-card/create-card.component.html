@@ -1,0 +1,60 @@
+<main [style]="{'background-image':'url(\'../../../assets/img/fondoVioletaMovimiento.svg\')'}">
+
+    <section *ngIf="config.userRol == 'ADMIN'" class="row px-4">
+
+        <div class="col col-12 col-sm-3 col-lg-4"></div>
+
+        <form class="col col-12 col-sm-6 col-lg-4 py-5 px-3 px-md-5 rounded shadow position-relative" [style]="{'background-color':config.backgroundLightTransparent}" #formCard="ngForm" (ngSubmit)="create(formCard)">
+            
+            <span routerLink="/admin/gestion-tarjetas" class="arrowBack text-light" matTooltip="Volver" matTooltipPosition="left" [style]="{'background-color':config.baseColorLight}">⤶</span>
+
+            <h1 class="text-center mb-3">Crear Tarjeta</h1>
+            <p>
+                <mat-form-field appearance="outline" class="w-100" color="primary">
+                    <mat-label [ngClass]="config.textColorClass">Título</mat-label>
+                    <input type="text" name="title" #title="ngModel" autocomplete="off" matInput [ngClass]="config.textColorClass" required [(ngModel)]="card.title">
+                    <mat-error *ngIf="!formCard.form.valid">El título es obligatorio.</mat-error>
+                </mat-form-field>
+            </p>
+            <p>
+                <mat-form-field appearance="outline" class="w-100" color="primary">
+                    <mat-label [ngClass]="config.textColorClass">Descripción</mat-label>
+                    <input type="text" name="desc" #desc="ngModel" autocomplete="off" matInput [ngClass]="config.textColorClass" [(ngModel)]="card.desc">
+                </mat-form-field>
+            </p>
+            <p>
+                <mat-form-field appearance="outline" class="w-100" color="primary">
+                    <mat-label [ngClass]="config.textColorClass">Días de Duración</mat-label>
+                    <input type="number" name="duration" #duration="ngModel" autocomplete="off" matInput [ngClass]="config.textColorClass" required [(ngModel)]="card.duration">
+                    <mat-error *ngIf="!formCard.form.valid">Los días de duración es obligatorio.</mat-error>
+                </mat-form-field>
+            </p>
+            <p>
+                <mat-form-field appearance="outline" class="w-100" color="primary">
+                    <mat-label [ngClass]="config.textColorClass">Estrellas</mat-label>
+                    <input type="number" name="stars" #stars="ngModel" autocomplete="off" matInput [ngClass]="config.textColorClass" required [(ngModel)]="card.stars">
+                    <mat-error *ngIf="!formCard.form.valid">El número de estrellas es obligatorio.</mat-error>
+                </mat-form-field>
+            </p>
+            <div class="mensajeExitoso" *ngIf="cardCreated">
+                Tarjeta creada correctamente.
+                <span (click)="cardCreated = false">X</span>
+            </div>
+    
+            <div class="row mt-2 mx-1 mx-md-0">
+                <div class="col col-12 col-sm-3"></div>
+                <button mat-raised-button color="primary" type="submit" class="col col-12 col-sm-6 fs-4 mt-3" style="height: 60px;" [ngClass]="{'buttonDisabled' : !formCard.form.valid}" id="btnCreate">Crear</button>
+                <div class="col col-12 col-sm-3"></div>
+            </div>
+          </form>
+
+          <div class="col col-12 col-sm-3 col-lg-4 d-flex align-items-end">
+            <img src="../../../assets/img/card.svg" data-aos="zoom-in-right" data-aos-delay="300"  alt="Ilustración de Registro" class="d-none d-md-block">
+          </div>
+    </section>
+
+    <div *ngIf="config.userRol != 'ADMIN'">
+        <h1>No tienes permisos para acceder a esta página.</h1>
+    </div>
+
+</main>

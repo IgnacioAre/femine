@@ -10,6 +10,7 @@ import { RegisterComponent } from './components/register/register.component';
 import { AdminComponent } from './components/admin/admin.component';
 import { GestionUsuariosComponent } from './components/gestion-usuarios/gestion-usuarios.component';
 import { GestionTarjetasComponent } from './components/gestion-tarjetas/gestion-tarjetas.component';
+import { CreateCardComponent } from './components/create-card/create-card.component';
 
 const routes: Routes = [
 
@@ -28,6 +29,7 @@ const routes: Routes = [
 
     //TARJETAS
     {path: 'admin/gestion-tarjetas', component: GestionTarjetasComponent},
+    {path: 'admin/crear-tarjeta', component:CreateCardComponent},
 
     //ERROR 404
     {path: '**', component: NotFoundPageComponent}

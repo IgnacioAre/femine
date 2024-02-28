@@ -16,7 +16,7 @@ export class GestionUsuariosComponent{
 
   public config:any = Configuracion;
   public users:any = [];
-  public usersCount = 0;
+  public usersCount = -1;
   public table:any;
 
   constructor(private authService: AuthService){
@@ -24,16 +24,17 @@ export class GestionUsuariosComponent{
     this.users = this.authService.getUsersList();
     this.usersCount = this.users.length;
     
-    setTimeout(() => {
-      this.table = new DataTable('#tablaGestionUsuarios', {
-        responsive: true,
-        language: {
-          url: '../../assets/js/spanish_datatable.json'
-        },
-        order: [[0, 'asc']]
-      });
-    }, 200);
-
+    if(this.usersCount > 0){
+      setTimeout(() => {
+        this.table = new DataTable('#tablaGestionUsuarios', {
+          responsive: true,
+          language: {
+            url: '../../assets/js/spanish_datatable.json'
+          },
+          order: [[0, 'asc']]
+        });
+      }, 200);
+    }
   }
 
   adminOptionHover(element:any){
@@ -74,9 +75,21 @@ export class GestionUsuariosComponent{
         let subnameEdit = result.value[1];    
   
         try {
-           this.authService.updateUser(id, nameEdit, subnameEdit);
+           let res = this.authService.updateUser(id, nameEdit, subnameEdit);
 
-           this.users = this.authService.getUsersList();
+           if(res['status'] === 200){
+            this.users = this.authService.getUsersList();
+           }else if(res['status'] === 202){
+            Swal.fire({
+              title: "Error",
+              text: res['msg']
+            });
+          }else{
+            Swal.fire({
+              title: "Error",
+              text: "Ha ocurrido un error y no has podido actualizar al usuario."
+            });
+          }
 
         } catch (error) {
            console.error("Error al actualizar usuario: ", error);
@@ -86,6 +99,44 @@ export class GestionUsuariosComponent{
       
     });
 
+
+  }
+
+  deleteUser(id: number,name: string,subname: string){
+
+    Swal.fire({
+      title: "Confirmación",
+      text: `¿Seguro que deseas eliminar al cliente ${name + ' ' + subname}?`,
+      showCancelButton: true,
+      cancelButtonText: 'Cancelar',
+      confirmButtonText: 'Confirmar',
+    }).then( (result:any) => {
+
+      if (result.isConfirmed) {
+  
+        try {
+           let res = this.authService.deleteUser(id);
+
+           if(res['status'] === 200){
+            this.users = this.authService.getUsersList();
+           }else if(res['status'] === 202){
+            Swal.fire({
+              title: "Error",
+              text: res['msg']
+            });
+          }
+
+        } catch (error) {
+          Swal.fire({
+            title: "Error",
+            text: 'Lo siento, ocurrió un error inesperado.'
+          });
+           console.error("Error al eliminar tarjeta: ", error);
+        }
+
+      }
+      
+    });
 
   }
 

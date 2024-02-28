@@ -6,6 +6,7 @@ import { AuthService } from 'src/app/services/auth.service';
 
 declare const $: any;
 declare const AOS: any;
+declare const Swal: any;
 
 @Component({
   selector: 'app-login',
@@ -63,11 +64,16 @@ export class LoginComponent implements OnInit {
 
       if(res.status === 200){
         this._router.navigate(['/inicio']);
-      }else if(res.status === 203){
-        alert(res.responseJSON);
+      }else if(res['status'] === 202){
+        Swal.fire({
+          title: "Error",
+          text: res['msg']
+        });
       }else{
-        alert('Ha ocurrido un error y no has podido iniciar sesión.');
-        console.log(res);
+        Swal.fire({
+          title: "Error",
+          text: "Ha ocurrido un error y no has podido actualizar al usuario."
+        });
       }
 
     }
