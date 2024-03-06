@@ -11,6 +11,7 @@ import { AdminComponent } from './components/admin/admin.component';
 import { GestionUsuariosComponent } from './components/gestion-usuarios/gestion-usuarios.component';
 import { GestionTarjetasComponent } from './components/gestion-tarjetas/gestion-tarjetas.component';
 import { CreateCardComponent } from './components/create-card/create-card.component';
+import { ProfileComponent } from './components/profile/profile.component';
 
 const routes: Routes = [
 
@@ -26,6 +27,7 @@ const routes: Routes = [
     //CLIENTES
     {path: 'admin/gestion-clientes', component: GestionUsuariosComponent},
     {path: 'admin/registrar-cliente', component: RegisterComponent},
+    {path: 'admin/cliente/:id', component: ProfileComponent},
 
     //TARJETAS
     {path: 'admin/gestion-tarjetas', component: GestionTarjetasComponent},

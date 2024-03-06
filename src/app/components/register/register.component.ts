@@ -70,12 +70,14 @@ export class RegisterComponent implements OnInit {
       }else if(res['status'] === 202){
         Swal.fire({
           title: "Error",
-          text: res['msg']
+          text: res['msg'],
+          icon: 'error'
         });
       }else{
         Swal.fire({
           title: "Error",
-          text: "Ha ocurrido un error y no te has podido registrar."
+          text: "Ha ocurrido un error y no te has podido registrar.",
+          icon: 'error'
         });
 
         console.log(res['msg']);

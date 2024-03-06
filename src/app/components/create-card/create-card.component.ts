@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { CardCreate } from 'src/app/models/cadCreate';
+import { CardCreate } from 'src/app/models/cardCreate';
 import { Configuracion } from 'src/app/models/configuracion';
 import { AuthService } from 'src/app/services/auth.service';
 
@@ -74,12 +74,14 @@ export class CreateCardComponent implements OnInit {
       }else if(res['status'] === 202){
         Swal.fire({
           title: "Error",
-          text: res['msg']
+          text: res['msg'],
+          icon: 'error'
         });
       }else{
         Swal.fire({
           title: "Error",
-          text: "Ha ocurrido un error y no te has podido registrar."
+          text: "Ha ocurrido un error y no te has podido registrar.",
+          icon: 'error'
         });
 
         console.log(res['msg']);

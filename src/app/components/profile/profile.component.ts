@@ -1,53 +1,69 @@
 import { Component } from '@angular/core';
-import { Configuracion, apiUrl } from 'src/app/models/configuracion';
-import DataTable from 'datatables.net-dt';
+import { ActivatedRoute } from '@angular/router';
+import { Configuracion } from 'src/app/models/configuracion';
 import { AuthService } from 'src/app/services/auth.service';
-import 'datatables.net-responsive-dt';
 
 declare const $: any;
 declare const Swal: any;
 
 @Component({
-  selector: 'app-gestion-usuarios',
-  templateUrl: './gestion-usuarios.component.html',
-  styleUrls: ['./gestion-usuarios.component.scss']
+  selector: 'app-profile',
+  templateUrl: './profile.component.html',
+  styleUrls: ['./profile.component.scss']
 })
-export class GestionUsuariosComponent{
+export class ProfileComponent {
 
   public config:any = Configuracion;
-  public users:any = [];
-  public usersCount = -1;
-  public table:any;
-  public window_width = 0;
   public cards:any = [];
+  public cards_list:any = [];
+  public number_stars:any = [];
+  public client:any;
 
+  constructor(private route: ActivatedRoute,private authService: AuthService){
 
-  constructor(private authService: AuthService){
+    let param_id = ((this.route.snapshot.paramMap.get('id')) ? this.route.snapshot.paramMap.get('id') : '');
+    let id:number = ((param_id !== null) ? parseInt(param_id) : 0);
 
-    this.window_width = $(window).width();
-
-    this.users = this.authService.getUsersList();
-    this.usersCount = this.users.length;
+    this.client = authService.getUserById(id)['msg'];
+  
+    this.updateCards(id);
     
-    if(this.usersCount > 0){
-      setTimeout(() => {
-        this.table = new DataTable('#tablaGestionUsuarios', {
-          responsive: true,
-          language: {
-            url: '../../assets/js/spanish_datatable.json'
-          },
-          order: [[0, 'asc']]
-        });
-      }, 200);
+  }
+
+  updateCards(id:number){
+    this.cards = this.authService.getUserCardsList(id);
+
+    if(this.cards.length > 0){
+      for (let index = 0; index < this.cards.length; index++) {
+        const element = this.cards[index];
+        this.number_stars[index] = Array(this.cards[index].stars).fill(0).map((x,i)=>i);
+      }
     }
   }
 
-  adminOptionHover(element:any){
-    $('#'+element).css('background-color',this.config.backgroundTransparent);
-  }
+  updateStars(id_assigned:number, card_position:number, star_position:number){
 
-  adminOptionLeave(element:any){
-    $('#'+element).css('background-color',this.config.baseColorLight);
+    let star = $('span[data-card="'+card_position+'"][data-value="'+star_position+'"]');
+
+      console.log('a');
+      
+      if(star.hasClass('unmarked-star')){
+        
+        star.removeClass('unmarked-star').addClass('marked-star').text('');
+
+        $('.unmarked-star').map((index:number,element:any)=>{
+          let element_unmarked = $('span[data-card="'+star.data('card')+'"][data-value="'+element.innerText+'"]');
+          
+          if(element_unmarked.data('value') < star.data('value')){
+            element_unmarked.removeClass('unmarked-star').addClass('marked-star').text('');
+          }
+
+        });
+
+      }
+
+      this.authService.updateNumberCard(id_assigned,star.data('value'));
+
   }
 
   editUser(id: number,name: string,subname: string){
@@ -83,7 +99,8 @@ export class GestionUsuariosComponent{
            let res = this.authService.updateUser(id, nameEdit, subnameEdit);
 
            if(res['status'] === 200){
-            this.users = this.authService.getUsersList();
+            this.client.name = nameEdit;
+            this.client.subname = subnameEdit;
            }else if(res['status'] === 202){
             Swal.fire({
               title: "Error",
@@ -142,7 +159,7 @@ export class GestionUsuariosComponent{
            let res = this.authService.deleteUser(id);
 
            if(res['status'] === 200){
-            this.users = this.authService.getUsersList();
+            window.location.href = window.location.origin + '/admin/gestion-clientes';
            }else if(res['status'] === 202){
             Swal.fire({
               title: "Error",
@@ -183,13 +200,13 @@ export class GestionUsuariosComponent{
       name_capitalize += name[0].toUpperCase() + name.slice(1).toLowerCase();
     }
 
-    this.cards = this.authService.getCardsList();
+    this.cards_list = this.authService.getCardsList();
 
-    if(this.cards.length > 0){
+    if(this.cards_list.length > 0){
 
       let listado = '';
 
-      this.cards.forEach((c:any) => {
+      this.cards_list.forEach((c:any) => {
         listado += `<option value="${c.id}">${c.title}</option>`;
       });
 
@@ -216,10 +233,7 @@ export class GestionUsuariosComponent{
               let res = this.authService.assignCard(result.value,id);
  
               if(res['status'] === 200){
-                Swal.fire({
-                  title: 'Tarjeta asignada correctamente!',
-                  icon: 'success'
-                });
+                this.updateCards(id);
               }else if(res['status'] === 202){
                Swal.fire({
                  title: "Error",
@@ -256,10 +270,5 @@ export class GestionUsuariosComponent{
 
   }
 
-  viewProfile(id: number){
-
-    window.location.href = window.location.origin+'/admin/cliente/'+id;
-
-  }
 
 }

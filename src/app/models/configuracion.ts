@@ -13,7 +13,7 @@ export var Configuracion = {
     backgroundMenu: '#fff',
     backgroundPage: 'linear-gradient(to right bottom, #f8f8f8, #f5f2f7, #f6ecf3, #f9e5ec, #fbdfe2)',
     backgroundTransparent: 'rgba(181, 84, 243,0.5)',
-    backgroundLightTransparent: 'rgba(236,207,255, 0.5)'
+    backgroundLightTransparent: 'rgba(236,207,255, 0.5)',
 };
 
 

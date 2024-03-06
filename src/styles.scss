@@ -8,6 +8,11 @@
     font-family: 'Outfit', sans-serif !important;
 }
 
+:root{
+    --violet: #B554F3;
+    --violet-dark: #860587;
+}
+
 html, body { 
     height: 100%; 
     overflow-x: hidden;
@@ -45,11 +50,11 @@ p{
 }
 
 .activeLinkViolet{
-    color: #B554F3 !important;
+    color: var(--violet) !important;
 }
 
 .activeLinkVioletDark{
-    color: #860587;
+    color: var(--violet-dark);
 }
 
 .activeLinkDark{
@@ -68,7 +73,7 @@ p{
 
 .mensajeExitoso{
     color: #fff;
-    background-color: #238748;
+    background-color: var(--violet-dark);
     padding: 10px 15px;
     border-radius: 5px;
     display: flex;
@@ -91,8 +96,18 @@ p{
     width: 50px;
     height: 50px;
     font-size: 20pt;
+    color: #fff;
     cursor: pointer;
     border-radius: 999px;
+}
+
+.span-circle{
+    width: 40px;
+    height: 40px;
+    display: flex;
+    font-size: 20pt;
+    justify-content: center;
+    align-items: center;
 }
 
 .adminOption{
@@ -114,8 +129,67 @@ p{
 .carousel-indicators [data-bs-target] {
     width: 10px;
     height: 10px;
-    background-color: #860587;
+    background-color: var(--violet-dark);
     border-radius: 50%;
+}
+
+//Card
+
+.container-card{
+    background-color: rgb(255, 250, 223);
+    box-shadow: 0 0 10px #ccb94f;
+    border-radius: 6px;
+    width: 32.5%;
+    overflow: hidden;
+
+    .badge{
+        background-color: goldenrod;
+    }
+}
+
+.title-card{
+    background-color: rgb(249, 233, 138);
+    color: goldenrod;
+}
+
+.description-card{
+    color: goldenrod;
+    min-height: 20px;
+}
+
+.unmarked-star{
+    display: inline-block;
+    border: 1px solid gold;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: gold;
+    cursor: pointer;
+    transition: background-color 300ms, color 300ms;
+}
+
+.unmarked-star:hover{
+    background-color: gold;
+    color: rgb(255, 250, 223);
+}
+
+.marked-star{
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    background-image: url(../src/assets/img/star.png);
+    background-size: 40px;
+}
+
+.delete-card{
+    transition: color 300ms;
+}
+
+.delete-card:hover{
+    color: rgb(214, 9, 9);
 }
 
 @media screen and (max-width: 768px) {

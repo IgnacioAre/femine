@@ -93,12 +93,14 @@ export class GestionTarjetasComponent {
            }else if(res['status'] === 202){
             Swal.fire({
               title: "Error",
-              text: res['msg']
+              text: res['msg'],
+              icon: 'error'
             });
           }else{
             Swal.fire({
               title: "Error",
-              text: "Ha ocurrido un error y no has podido actualizar la tarjeta."
+              text: "Ha ocurrido un error y no has podido actualizar la tarjeta.",
+              icon: 'error'
             });
           }
 
@@ -137,14 +139,16 @@ export class GestionTarjetasComponent {
            }else if(res['status'] === 202){
             Swal.fire({
               title: "Error",
-              text: res['msg']
+              text: res['msg'],
+              icon: 'error'
             });
           }
 
         } catch (error) {
           Swal.fire({
             title: "Error",
-            text: 'Lo siento, ocurrió un error inesperado.'
+            text: 'Lo siento, ocurrió un error inesperado.',
+            icon: 'error'
           });
            console.error("Error al eliminar tarjeta: ", error);
         }

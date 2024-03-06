@@ -67,12 +67,14 @@ export class LoginComponent implements OnInit {
       }else if(res['status'] === 202){
         Swal.fire({
           title: "Error",
-          text: res['msg']
+          text: res['msg'],
+          icon: 'error'
         });
       }else{
         Swal.fire({
           title: "Error",
-          text: "Ha ocurrido un error y no has podido actualizar al usuario."
+          text: "Ha ocurrido un error y no has podido actualizar al usuario.",
+          icon: 'error'
         });
       }
 
