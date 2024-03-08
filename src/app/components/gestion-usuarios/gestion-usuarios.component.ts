@@ -109,7 +109,7 @@ export class GestionUsuariosComponent{
 
   }
 
-  deleteUser(id: number,name: string,subname: string){
+  changeStateUser(id: number,name: string,subname: string, active:number){
 
     let complete_name = name + ' ' + subname;
     
@@ -128,9 +128,17 @@ export class GestionUsuariosComponent{
       name_capitalize += complete_name[0].toUpperCase() + complete_name.slice(1).toLowerCase();
     }
 
+    let msg = '';
+
+    if(active){
+      msg = `¿Seguro que deseas <b>restaurar</b> al cliente ${name_capitalize}?`;
+    }else{
+      msg = `¿Seguro que deseas <b>eliminar</b> al cliente ${name_capitalize}?`;
+    }
+
     Swal.fire({
       title: "Confirmación",
-      text: `¿Seguro que deseas eliminar al cliente ${name_capitalize}?`,
+      html: msg,
       showCancelButton: true,
       cancelButtonText: 'Cancelar',
       confirmButtonText: 'Confirmar',
@@ -139,7 +147,7 @@ export class GestionUsuariosComponent{
       if (result.isConfirmed) {
   
         try {
-           let res = this.authService.deleteUser(id);
+           let res = this.authService.changeStateUser(id,active);
 
            if(res['status'] === 200){
             this.users = this.authService.getUsersList();
@@ -183,7 +191,7 @@ export class GestionUsuariosComponent{
       name_capitalize += name[0].toUpperCase() + name.slice(1).toLowerCase();
     }
 
-    this.cards = this.authService.getCardsList();
+    this.cards = this.authService.getCardsUser(id)['msg'];  
 
     if(this.cards.length > 0){
 

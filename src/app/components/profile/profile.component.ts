@@ -15,7 +15,8 @@ export class ProfileComponent {
 
   public config:any = Configuracion;
   public cards:any = [];
-  public cards_list:any = [];
+  public count_cards: number = 0;
+  public cards_assign_option:any = [];
   public number_stars:any = [];
   public client:any;
 
@@ -32,7 +33,7 @@ export class ProfileComponent {
 
   updateCards(id:number){
     this.cards = this.authService.getUserCardsList(id);
-
+    this.count_cards = this.cards.length;
     if(this.cards.length > 0){
       for (let index = 0; index < this.cards.length; index++) {
         const element = this.cards[index];
@@ -44,8 +45,6 @@ export class ProfileComponent {
   updateStars(id_assigned:number, card_position:number, star_position:number){
 
     let star = $('span[data-card="'+card_position+'"][data-value="'+star_position+'"]');
-
-      console.log('a');
       
       if(star.hasClass('unmarked-star')){
         
@@ -126,7 +125,7 @@ export class ProfileComponent {
 
   }
 
-  deleteUser(id: number,name: string,subname: string){
+  changeStateUser(id: number,name: string,subname: string, active:number){
 
     let complete_name = name + ' ' + subname;
     
@@ -145,9 +144,17 @@ export class ProfileComponent {
       name_capitalize += complete_name[0].toUpperCase() + complete_name.slice(1).toLowerCase();
     }
 
+    let msg = '';
+
+    if(active){
+      msg = `¿Seguro que deseas <b>restaurar</b> al cliente ${name_capitalize}?`;
+    }else{
+      msg = `¿Seguro que deseas <b>eliminar</b> al cliente ${name_capitalize}?`;
+    }
+
     Swal.fire({
       title: "Confirmación",
-      text: `¿Seguro que deseas eliminar al cliente ${name_capitalize}?`,
+      html: msg,
       showCancelButton: true,
       cancelButtonText: 'Cancelar',
       confirmButtonText: 'Confirmar',
@@ -156,7 +163,7 @@ export class ProfileComponent {
       if (result.isConfirmed) {
   
         try {
-           let res = this.authService.deleteUser(id);
+           let res = this.authService.changeStateUser(id,active);
 
            if(res['status'] === 200){
             window.location.href = window.location.origin + '/admin/gestion-clientes';
@@ -200,13 +207,13 @@ export class ProfileComponent {
       name_capitalize += name[0].toUpperCase() + name.slice(1).toLowerCase();
     }
 
-    this.cards_list = this.authService.getCardsList();
+    this.cards_assign_option = this.authService.getCardsUser(this.client.id)['msg'];  
 
-    if(this.cards_list.length > 0){
+    if(this.cards_assign_option.length > 0){
 
       let listado = '';
 
-      this.cards_list.forEach((c:any) => {
+      this.cards_assign_option.forEach((c:any) => {
         listado += `<option value="${c.id}">${c.title}</option>`;
       });
 
@@ -261,12 +268,53 @@ export class ProfileComponent {
     }else{
 
       Swal.fire({
-        title: 'Aún no has creado tarjetas',
+        title: 'No tienes tarjetas disponibles.',
         html: '<p>No tienes tarjetas disponibles para asignar a este cliente.</p><a href="'+window.location.origin+'/admin/crear-tarjeta">Crea una nueva aquí</a>',
         icon: 'error'
       });
 
     }
+
+  }
+
+  deleteCardAssigned(id_assign: number,title: string){
+
+    Swal.fire({
+      title: "Confirmación",
+      text: `¿Seguro que deseas desvincular la tarjeta ${title}?`,
+      showCancelButton: true,
+      cancelButtonText: 'Cancelar',
+      confirmButtonText: 'Confirmar',
+    }).then( (result:any) => {
+
+      if (result.isConfirmed) {
+  
+        try {
+           let res = this.authService.deleteCardAssigned(id_assign);
+
+           if(res['status'] === 200){
+            this.cards = this.authService.getUserCardsList(this.client.id);
+            this.count_cards = this.cards.length;
+           }else if(res['status'] === 202){
+            Swal.fire({
+              title: "Error",
+              text: res['msg'],
+              icon: 'error'
+            });
+          }
+
+        } catch (error) {
+          Swal.fire({
+            title: "Error",
+            text: 'Lo siento, ocurrió un error inesperado.',
+            icon: 'error'
+          });
+           console.error("Error al eliminar tarjeta: ", error);
+        }
+
+      }
+      
+    });
 
   }
 

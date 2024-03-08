@@ -145,6 +145,8 @@ p{
     .badge{
         background-color: goldenrod;
     }
+
+    
 }
 
 .title-card{
@@ -176,6 +178,15 @@ p{
     color: rgb(255, 250, 223);
 }
 
+.no-action-star{
+    cursor: default;
+}
+
+.no-action-star:hover{
+    background-color: transparent;
+    color: gold;
+}
+
 .marked-star{
     display: inline-block;
     width: 40px;
@@ -192,16 +203,20 @@ p{
     color: rgb(214, 9, 9);
 }
 
-@media screen and (max-width: 768px) {
-    
-    .adminOption{
-        width: 100%;
+@media screen and (max-width: 1200px) {
+
+    .container-card{
+        width: 49%;
     }
 
 }
 
 @media screen and (max-width: 768px) {
     
+    .adminOption{
+        width: 100%;
+    }
+
     .arrowBack{
         top: 10px;
         left: 10px;
@@ -209,4 +224,7 @@ p{
         height: 40px;
     }
 
+    .container-card{
+        width: 100%;
+    }
 }

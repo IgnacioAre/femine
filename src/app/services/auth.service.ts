@@ -125,16 +125,17 @@ export class AuthService {
 
     }
 
-    deleteUser(id: number): any {
+    changeStateUser(id: number, active: number): any {
 
         let response:any = [];
 
         $.ajax({
-            url: apiUrl + 'user-delete',
+            url: apiUrl + 'user-change-state',
             method: 'POST',
             async: false,
             data: {
                 id: id,
+                active: active
             },
             dataType: 'JSON',
             success: (res:string, textStatus: string, jqXHR: any) => {
@@ -285,6 +286,33 @@ export class AuthService {
 
     }
 
+    getCardsUser(client_id: number) {
+        
+        let response: any = [];
+        
+        $.ajax({
+            url: apiUrl + 'get-cards-users',
+            method: 'POST',
+            data:{
+                client_id: client_id
+            },
+            async: false,
+            dataType: 'JSON',
+            success: (res:string, textStatus: string, jqXHR: any) => {
+                response['msg'] = res;
+                response['status'] = jqXHR.status;
+            },
+            error: (jqXHR:any, textStatus:any)=>{
+                response['msg'] = 'Error en la consulta: '+textStatus;
+                response['status'] = 400;
+            }
+        });
+        
+        return response;
+
+    }
+
+
     updateCard(id: number,title: string,desc: string, duration: number, stars: number): any {
 
         let response:any = [];
@@ -431,24 +459,50 @@ export class AuthService {
 
         let response:any = [];
 
-        // $.ajax({
-        //     url: apiUrl + 'number-card-update',
-        //     method: 'POST',
-        //     async: false,
-        //     data: {
-        //         id_assigned: id_assigned,
-        //         position: position
-        //     },
-        //     dataType: 'JSON',
-        //     success: (res:string, textStatus: string, jqXHR: any) => {
-        //         response['msg'] = res;
-        //         response['status'] = jqXHR.status;
-        //     },
-        //     error: (jqXHR:any, textStatus:any)=>{
-        //         response['msg'] = 'Error en la consulta: '+textStatus;
-        //         response['status'] = 400;
-        //     }
-        // });
+        $.ajax({
+            url: apiUrl + 'number-card-update',
+            method: 'POST',
+            async: false,
+            data: {
+                id_assigned: id_assigned,
+                position: position
+            },
+            dataType: 'JSON',
+            success: (res:string, textStatus: string, jqXHR: any) => {
+                response['msg'] = res;
+                response['status'] = jqXHR.status;
+            },
+            error: (jqXHR:any, textStatus:any)=>{
+                response['msg'] = 'Error en la consulta: '+textStatus;
+                response['status'] = 400;
+            }
+        });
+
+        return response;
+
+    }
+
+    deleteCardAssigned(id_assigned: number): any {
+
+        let response:any = [];
+
+        $.ajax({
+            url: apiUrl + 'card-assigned-delete',
+            method: 'POST',
+            async: false,
+            data: {
+                id_assigned: id_assigned,
+            },
+            dataType: 'JSON',
+            success: (res:string, textStatus: string, jqXHR: any) => {
+                response['msg'] = res;
+                response['status'] = jqXHR.status;
+            },
+            error: (jqXHR:any, textStatus:any)=>{
+                response['msg'] = 'Error en la consulta: '+textStatus;
+                response['status'] = 400;
+            }
+        });
 
         return response;
 

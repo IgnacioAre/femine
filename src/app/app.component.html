@@ -22,7 +22,7 @@
       <div class="mt-4 ps-4">
         <a id="linkInicio" class="nav-link fs-5" [style]="{'color':config.baseColorLight}" routerLink="/inicio" [routerLinkActive]="config.textColorClass">Inicio</a>
         <a id="linkAdmin" class="nav-link fs-5 mt-4" [style]="{'color':config.baseColorLight}" routerLink="/admin" [routerLinkActive]="config.textColorClass" *ngIf="config.userToken !== '' && config.userRol === 'ADMIN'">Administración</a>
-        <a id="linkTarjeta" class="nav-link fs-5 mt-4" [style]="{'color':config.baseColorLight}" routerLink="/tarjetas" [routerLinkActive]="config.textColorClass" *ngIf="config.userToken !== ''">Mis Tarjetas</a>
+        <a id="linkTarjeta" class="nav-link fs-5 mt-4" [style]="{'color':config.baseColorLight}" routerLink="/tarjetas" [routerLinkActive]="config.textColorClass" *ngIf="config.userToken !== '' && config.userRol === 'USER'">Mis Tarjetas</a>
       </div>
 
       <span *ngTemplateOutlet="login"></span>

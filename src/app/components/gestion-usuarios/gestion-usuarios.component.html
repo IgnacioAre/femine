@@ -18,33 +18,31 @@
                     <table id="tablaGestionUsuarios" class="table table-striped table-secondary shadow display nowrap responsive w-100" [ngClass]="{'table-default' : config.colors == 'violet','table-secondary' : config.colors == 'dark'}">
                         <thead>
                             <tr>
-                                <th *ngIf="window_width < 700">Nombre Completo</th>
-                                <th *ngIf="window_width > 700">Nombre</th>
-                                <th *ngIf="window_width > 700">Apellido</th>
+                                <th>Nombre Completo</th>
                                 <th *ngIf="window_width > 700">Cédula</th>
                                 <th *ngIf="window_width > 700" style="width: 120px"></th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr *ngIf="usersCount == -1">
-                                <td colspan="4" class="text-center">Cargando <img src="../../../assets/img/loader_violet.svg" alt="Loader" width="32px"></td>
+                                <td *ngIf="window_width < 700" class="text-center">Cargando <img src="../../../assets/img/loader_violet.svg" alt="Loader" width="32px"></td>
+                                <td *ngIf="window_width > 700" colspan="4" class="text-center">Cargando <img src="../../../assets/img/loader_violet.svg" alt="Loader" width="32px"></td>
                             </tr>
     
                             <tr *ngIf="usersCount == 0">
-                                <td colspan="4" class="text-center">No se han encontrado resultados.</td>
+                                <td *ngIf="window_width < 700" class="text-center">No se han encontrado resultados.</td>
+                                <td *ngIf="window_width > 700" colspan="4" class="text-center">No se han encontrado resultados.</td>
                             </tr>
 
                             <tr class="dtr-control" *ngFor="let user of users">
-                                <td *ngIf="window_width < 700" (click)="viewProfile(user.id)" [ngClass]="{'text-decoration-line-through text-danger': !user.active}">{{user.name + ' ' + user.subname}}</td>
-                                <td *ngIf="window_width > 700" [ngClass]="{'text-decoration-line-through text-danger': !user.active}">{{user.name}}</td>
-                                <td *ngIf="window_width > 700" [ngClass]="{'text-decoration-line-through text-danger': !user.active}">{{user.subname}}</td>
+                                <td *ngIf="window_width < 700" (click)="viewProfile(user.id)">{{user.name + ' ' + user.subname}}</td>
+                                <td *ngIf="window_width > 700">{{user.name + ' ' + user.subname}}</td>
                                 <td *ngIf="window_width > 700">{{user.document}}</td>
                                 <td *ngIf="window_width > 700">
                                     <i (click)="editUser(user.id,user.name,user.subname)" role="button" matTooltip="Editar" class="bi bi-pencil-square fs-4 me-3"></i>
-                                    <i *ngIf="user.active" (click)="deleteUser(user.id,user.name,user.subname)" role="button" matTooltip="Eliminar Cliente" class="bi bi-trash fs-4 me-3"></i>
-                                    <i *ngIf="user.active" (click)="assignCard(user.id,user.name)" role="button" matTooltip="Vincular Tarjeta" class="bi bi-journal-plus fs-4 me-3"></i>
-                                    <i *ngIf="user.active" (click)="viewProfile(user.id)" role="button" matTooltip="Ver Perfil" class="bi bi-person fs-4 me-3"></i>
-                                    <i *ngIf="!user.active" role="button" matTooltip="Restaurar Cliente" class="bi bi-arrow-clockwise fs-4 me-3"></i>
+                                    <i (click)="changeStateUser(user.id,user.name,user.subname,0)" role="button" matTooltip="Eliminar Cliente" class="bi bi-trash fs-4 me-3"></i>
+                                    <i (click)="assignCard(user.id,user.name)" role="button" matTooltip="Vincular Tarjeta" class="bi bi-journal-plus fs-4 me-3"></i>
+                                    <i (click)="viewProfile(user.id)" role="button" matTooltip="Ver Perfil" class="bi bi-person fs-4 me-3"></i>
                                 </td>
                             </tr>
                         </tbody>

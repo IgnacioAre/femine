@@ -1,22 +1,23 @@
 <main [style]="{'background-image':'url(\'../../../assets/img/fondoVioletaMovimiento.svg\')'}">
 
-    <section *ngIf="config.userRol == 'ADMIN'" class="px-4">
+    <section *ngIf="config.userRol == 'ADMIN'" class="px-2 px-md-4">
 
 
         <div class="overflow-hidden rounded">
-            <div [style]="{'background-color':config.backgroundTitle,'border-bottom':'5px solid '+config.baseColorDark}" class="p-4 pb-2 text-light d-flex justify-content-between flex-wrap">
+            <div [style]="{'background-color':config.backgroundTitle,'border-bottom':'5px solid '+config.baseColorDark}" class="p-3 pb-2 p-md-4 pb-md-2 text-light d-flex justify-content-between flex-wrap">
                 <p class="fw-bold d-flex align-items-center"><span routerLink="/admin/gestion-clientes" class="span-circle me-2" matTooltip="Volver" role="button">⤶</span> {{client.name + ((client.subname !== '') ? ' ' + client.subname : '')}}</p>
-                <span class="mt-2 mt-sm-0">
+                <span class="mt-2 ms-auto ms-md-0">
                     <i role="button" (click)="editUser(client.id,client.name,client.subname)" matTooltip="Editar" class="bi bi-pencil-square fs-4 me-3"></i>
-                    <i role="button" (click)="deleteUser(client.id,client.name,client.subname)" matTooltip="Eliminar Cliente" class="bi bi-trash fs-4 me-3"></i>
+                    <i role="button" (click)="changeStateUser(client.id,client.name,client.subname,0)" matTooltip="Eliminar Cliente" class="bi bi-trash fs-4 me-3"></i>
                     <i role="button" (click)="assignCard(client.id,client.name)" matTooltip="Vincular Tarjeta" class="bi bi-journal-plus fs-4 me-3"></i>
                 </span>
             </div>
-            <div [style]="{'background-color':config.backgroundLightTransparent}" class="d-flex gap-3 flex-wrap p-4">
+            <div [style]="{'background-color':config.backgroundLightTransparent}" class="d-flex gap-3 flex-wrap p-2 p-md-4">
+                <h2 *ngIf="count_cards == 0" class="activeLinkVioletDark">Aún no se han vinculado tarjetas a este cliente.</h2>
                 <div class="container-card" *ngFor="let card of cards;let position_card=index">
                     <div class="title-card px-4 pb-1 pt-3 d-flex justify-content-between">
                         <p class="fs-5 fw-bold"><i class="bi bi-award"></i> {{card.title}}</p>
-                        <i role="button" matTooltip="Eliminar Tarjeta Vinculada" class="bi bi-trash fs-4 delete-card"></i>
+                        <i (click)="deleteCardAssigned(card.id_assigned,card.title)" role="button" matTooltip="Eliminar Tarjeta Vinculada" class="bi bi-trash fs-4 delete-card"></i>
                     </div>
                     <div class="p-4">
                         <div class="d-flex align-items-center justify-content-between gap-2 flex-wrap py-1 mb-3">

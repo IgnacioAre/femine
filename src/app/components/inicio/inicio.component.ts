@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Configuracion } from 'src/app/models/configuracion';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/services/auth.service';
 
 declare const $: any;
 declare const e: any;
@@ -14,8 +15,21 @@ declare const AOS: any;
 export class InicioComponent implements OnInit {
 
   public config:any = Configuracion;
+  public cards:any = [];
+  public count_cards: number = 0;
+  public number_stars:any = [];
 
-  constructor(private _router:Router){
+  constructor(private _router:Router, private authService: AuthService){
+
+    this.cards = this.authService.getCardsList();
+    this.count_cards = this.cards.length;
+
+    if(this.cards.length > 0){
+      for (let index = 0; index < this.cards.length; index++) {
+        const element = this.cards[index];
+        this.number_stars[index] = Array(this.cards[index].stars).fill(0).map((x,i)=>i);
+      }
+    }
 
   }
 
