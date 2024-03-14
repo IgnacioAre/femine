@@ -19,6 +19,7 @@ export class ProfileComponent {
   public cards_assign_option:any = [];
   public number_stars:any = [];
   public client:any;
+  public name_capitalize = '';
 
   constructor(private route: ActivatedRoute,private authService: AuthService){
 
@@ -26,13 +27,29 @@ export class ProfileComponent {
     let id:number = ((param_id !== null) ? parseInt(param_id) : 0);
 
     this.client = authService.getUserById(id)['msg'];
+
+    let complete_name = this.client.name + ' ' + this.client.subname;
+    let name_split = [];
+
+    if(complete_name.indexOf(' ') > -1){
+       name_split = complete_name.split(' ');
+
+       name_split.forEach((n:any) => {
+          this.name_capitalize += n[0].toUpperCase() + n.slice(1).toLowerCase() + ' ';
+       });
+
+    }else{
+      this.name_capitalize += complete_name[0].toUpperCase() + complete_name.slice(1).toLowerCase();
+    }
   
     this.updateCards(id);
     
   }
 
   updateCards(id:number){
-    this.cards = this.authService.getUserCardsList(id);
+    this.cards = this.authService.getUserCardsList(id);    
+    console.log(this.cards);
+    
     this.count_cards = this.cards.length;
     if(this.cards.length > 0){
       for (let index = 0; index < this.cards.length; index++) {
@@ -65,15 +82,15 @@ export class ProfileComponent {
 
   }
 
-  editUser(id: number,name: string,subname: string){
+  editUser(id: number){
     
     Swal.fire({
       title: "Editar Cliente",
       html:
           '<div class="d-flex flex-column align-items-start w-75 m-auto"><p>Nombre:</p>' +
-          '<input id="swal-input1" type="text" class="swal2-input mt-0 ms-0 w-100" value="'+name+'"></div>' +
+          '<input id="swal-input1" type="text" class="swal2-input mt-0 ms-0 w-100" value="'+this.client.name+'"></div>' +
           '<div class="mt-3 d-flex flex-column align-items-start w-75 m-auto"><p>Apellido:</p>' +
-          '<input id="swal-input2" type="text" class="swal2-input mt-0 ms-0 w-100" value="'+subname+'"></div>',
+          '<input id="swal-input2" type="text" class="swal2-input mt-0 ms-0 w-100" value="'+this.client.subname+'"></div>',
       showCancelButton: true,
       cancelButtonText: 'Cancelar',
       confirmButtonText: 'Confirmar',
@@ -125,31 +142,14 @@ export class ProfileComponent {
 
   }
 
-  changeStateUser(id: number,name: string,subname: string, active:number){
-
-    let complete_name = name + ' ' + subname;
-    
-    let name_split = [];
-    let name_capitalize = '';
-
-
-    if(complete_name.indexOf(' ') > -1){
-       name_split = complete_name.split(' ');
-
-       name_split.forEach(n => {
-          name_capitalize += n[0].toUpperCase() + n.slice(1).toLowerCase() + ' ';
-       });
-
-    }else{
-      name_capitalize += complete_name[0].toUpperCase() + complete_name.slice(1).toLowerCase();
-    }
+  changeStateUser(id: number, active:number){
 
     let msg = '';
 
     if(active){
-      msg = `¿Seguro que deseas <b>restaurar</b> al cliente ${name_capitalize}?`;
+      msg = `¿Seguro que deseas <b>restaurar</b> al cliente ${this.name_capitalize}?`;
     }else{
-      msg = `¿Seguro que deseas <b>eliminar</b> al cliente ${name_capitalize}?`;
+      msg = `¿Seguro que deseas <b>eliminar</b> al cliente ${this.name_capitalize}?`;
     }
 
     Swal.fire({
@@ -190,22 +190,7 @@ export class ProfileComponent {
 
   }
 
-  assignCard(id: number,name: string){
-
-    let name_split = [];
-    let name_capitalize = '';
-
-
-    if(name.indexOf(' ') > -1){
-       name_split = name.split(' ');
-
-       name_split.forEach(n => {
-          name_capitalize += n[0].toUpperCase() + n.slice(1).toLowerCase() + ' ';
-       });
-
-    }else{
-      name_capitalize += name[0].toUpperCase() + name.slice(1).toLowerCase();
-    }
+  assignCard(id: number){
 
     this.cards_assign_option = this.authService.getCardsUser(this.client.id)['msg'];  
 
@@ -218,7 +203,7 @@ export class ProfileComponent {
       });
 
       Swal.fire({
-        title: "Asignar Tarjeta al Cliente "+name_capitalize,
+        title: "Asignar Tarjeta al Cliente "+this.name_capitalize,
         html:
             '<div class="d-flex flex-column align-items-start w-75 m-auto"><p>Selecciona una tarjeta:</p>' +
             '<select id="swal-input1" class="swal2-input mt-0 ms-0 w-100">'+listado+'</select></div>',
@@ -315,6 +300,27 @@ export class ProfileComponent {
       }
       
     });
+
+  }
+
+  updateGiftCard(id: number){
+
+    let message_giftcard  = $('#vale_giftcard_' + id).val();
+
+    let res = this.authService.updateGiftcard(id,message_giftcard);
+
+    if(res['status'] === 200){
+      Swal.fire({
+        title: "Giftcard actualizada",
+        icon: 'success'
+      });
+     }else if(res['status'] === 202){
+      Swal.fire({
+        title: "Error",
+        text: res['msg'],
+        icon: 'error'
+      });
+    }
 
   }
 

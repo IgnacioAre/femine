@@ -8,34 +8,36 @@
             
             <span routerLink="/admin/gestion-tarjetas" class="arrowBack" matTooltip="Volver" matTooltipPosition="left" [style]="{'background-color':config.baseColorLight}">⤶</span>
 
-            <h1 class="text-center mb-3">Crear Tarjeta</h1>
-            <p>
-                <mat-form-field appearance="outline" class="w-100" color="primary">
-                    <mat-label [ngClass]="config.textColorClass">Título</mat-label>
-                    <input type="text" name="title" #title="ngModel" autocomplete="off" matInput [ngClass]="config.textColorClass" required [(ngModel)]="card.title">
-                    <mat-error *ngIf="!formCard.form.valid">El título es obligatorio.</mat-error>
-                </mat-form-field>
-            </p>
-            <p>
-                <mat-form-field appearance="outline" class="w-100" color="primary">
-                    <mat-label [ngClass]="config.textColorClass">Descripción</mat-label>
-                    <input type="text" name="desc" #desc="ngModel" autocomplete="off" matInput [ngClass]="config.textColorClass" [(ngModel)]="card.desc">
-                </mat-form-field>
-            </p>
-            <p>
-                <mat-form-field appearance="outline" class="w-100" color="primary">
-                    <mat-label [ngClass]="config.textColorClass">Días de Duración</mat-label>
-                    <input type="number" name="duration" #duration="ngModel" autocomplete="off" matInput [ngClass]="config.textColorClass" required [(ngModel)]="card.duration">
-                    <mat-error *ngIf="!formCard.form.valid">Los días de duración es obligatorio.</mat-error>
-                </mat-form-field>
-            </p>
-            <p>
-                <mat-form-field appearance="outline" class="w-100" color="primary">
-                    <mat-label [ngClass]="config.textColorClass">Estrellas</mat-label>
-                    <input type="number" name="stars" #stars="ngModel" autocomplete="off" matInput [ngClass]="config.textColorClass" required [(ngModel)]="card.stars">
-                    <mat-error *ngIf="!formCard.form.valid">El número de estrellas es obligatorio.</mat-error>
-                </mat-form-field>
-            </p>
+            <h1 class="text-center mb-4">Crear Tarjeta</h1>
+
+            <mat-form-field appearance="outline" class="w-100 mb-2" color="primary">
+                <mat-label [ngClass]="config.textColorClass">Tipo</mat-label>
+                <select [ngClass]="config.textColorClass" matNativeControl required name="type" #type="ngModel" [(ngModel)]="card.type" id="tipoSelect">
+                    <option selected value="Estandar">Estandar</option>
+                    <option value="Objetivo">Objetivo</option>
+                    <option value="Giftcard">Giftcard</option>
+                </select>
+                <mat-error *ngIf="!formCard.form.valid">El tipo es obligatorio.</mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="w-100 mb-2" color="primary">
+                <mat-label [ngClass]="config.textColorClass">Título</mat-label>
+                <input type="text" name="title" #title="ngModel" autocomplete="off" matInput [ngClass]="config.textColorClass" required [(ngModel)]="card.title" id="tituloInput">
+                <mat-error *ngIf="!formCard.form.valid">El título es obligatorio.</mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="w-100 mb-2" color="primary" id="descCard">
+                <mat-label [ngClass]="config.textColorClass">Descripción</mat-label>
+                <input type="text" name="desc" #desc="ngModel" autocomplete="off" matInput [ngClass]="config.textColorClass" [(ngModel)]="card.desc">
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="w-100 mb-2" color="primary" id="durationCard">
+                <mat-label [ngClass]="config.textColorClass">Días de Duración</mat-label>
+                <input type="number" name="duration" #duration="ngModel" autocomplete="off" matInput [ngClass]="config.textColorClass" required [(ngModel)]="card.duration">
+                <mat-error *ngIf="!formCard.form.valid">Los días de duración es obligatorio.</mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="w-100 mb-2" color="primary" id="starCard">
+                <mat-label [ngClass]="config.textColorClass">Estrellas</mat-label>
+                <input type="number" name="stars" #stars="ngModel" autocomplete="off" matInput [ngClass]="config.textColorClass" required [(ngModel)]="card.stars">
+                <mat-error *ngIf="!formCard.form.valid">El número de estrellas es obligatorio.</mat-error>
+            </mat-form-field>
             <div class="mensajeExitoso" *ngIf="cardCreated">
                 Tarjeta creada correctamente.
                 <span (click)="cardCreated = false">X</span>

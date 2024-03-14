@@ -71,6 +71,7 @@
 
 .fotoPortada{
     cursor: pointer;
+    transition: filter 300ms !important;
 }
 
 .fotoPortada:hover{

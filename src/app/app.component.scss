@@ -31,3 +31,22 @@
       }
     }
   }
+
+  #logo-app{
+    animation-name: logo-app;
+    animation-duration: 3s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+}
+
+@keyframes logo-app {
+    0%{
+        filter: drop-shadow(0 0 0px var(--violet-dark));
+    }
+    50%{
+        filter: drop-shadow(0 0 15px var(--violet-dark));
+    }
+    100%{
+        filter: drop-shadow(0 0 0px var(--violet-dark));
+    }
+}

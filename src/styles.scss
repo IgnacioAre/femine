@@ -139,7 +139,7 @@ p{
     background-color: rgb(255, 250, 223);
     box-shadow: 0 0 10px #ccb94f;
     border-radius: 6px;
-    width: 32.5%;
+    width: 490px;
     overflow: hidden;
 
     .badge{
@@ -157,6 +157,15 @@ p{
 .description-card{
     color: goldenrod;
     min-height: 20px;
+}
+
+.congratulations-card{
+    color: goldenrod;
+    font-family: 'Dancing Script', cursive !important;
+
+    span{
+        border-color: goldenrod !important;
+    }
 }
 
 .unmarked-star{
@@ -195,6 +204,14 @@ p{
     background-size: 40px;
 }
 
+.violet-star{
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    background-image: url(../src/assets/img/violet_star.png);
+    background-size: 40px;
+}
+
 .delete-card{
     transition: color 300ms;
 }
@@ -203,12 +220,18 @@ p{
     color: rgb(214, 9, 9);
 }
 
-@media screen and (max-width: 1200px) {
+.golden-icon-card{
+    color: goldenrod;
+    transition: color 300ms;
+}
 
-    .container-card{
-        width: 49%;
-    }
+.golden-icon-card:hover{
+    color: rgb(173, 125, 5);
+}
 
+.button-card{
+    border: none;
+    outline-color: goldenrod;
 }
 
 @media screen and (max-width: 768px) {

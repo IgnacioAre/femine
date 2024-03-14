@@ -313,7 +313,7 @@ export class AuthService {
     }
 
 
-    updateCard(id: number,title: string,desc: string, duration: number, stars: number): any {
+    updateCard(id: number,title: string,desc: string, type: string, duration: number, stars: number): any {
 
         let response:any = [];
 
@@ -325,6 +325,7 @@ export class AuthService {
                 id: id,
                 title: title,
                 desc: desc,
+                type: type,
                 duration: duration,
                 stars: stars
             },
@@ -370,7 +371,7 @@ export class AuthService {
 
     }
 
-    createCard(title: string,desc: string, duration: number, stars: number): any {
+    createCard(title: string,desc: string, type: string, duration: number, stars: number): any {
         
         let response:any = [];
 
@@ -381,6 +382,7 @@ export class AuthService {
             data: {
                 title: title,
                 desc: desc,
+                type: type,
                 duration: duration,
                 stars: stars
             },
@@ -492,6 +494,33 @@ export class AuthService {
             async: false,
             data: {
                 id_assigned: id_assigned,
+            },
+            dataType: 'JSON',
+            success: (res:string, textStatus: string, jqXHR: any) => {
+                response['msg'] = res;
+                response['status'] = jqXHR.status;
+            },
+            error: (jqXHR:any, textStatus:any)=>{
+                response['msg'] = 'Error en la consulta: '+textStatus;
+                response['status'] = 400;
+            }
+        });
+
+        return response;
+
+    }
+
+    updateGiftcard(id_assigned: number, message: string): any {
+
+        let response:any = [];
+
+        $.ajax({
+            url: apiUrl + 'update-message-giftcard',
+            method: 'POST',
+            async: false,
+            data: {
+                id_assigned: id_assigned,
+                message: message
             },
             dataType: 'JSON',
             success: (res:string, textStatus: string, jqXHR: any) => {

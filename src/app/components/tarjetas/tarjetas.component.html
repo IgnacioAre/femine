@@ -4,20 +4,20 @@
     <div class="overflow-hidden rounded mx-1 mx-md-5">
         <h1 class="py-4 text-light d-flex justify-content-center position-relative mb-0" [style]="{'background-color':config.backgroundTitle,'border-bottom':'5px solid '+config.baseColorDark}"><span routerLink="/inicio" class="arrowBack pt-4 ps-3 pt-md-0 ps-md-0 pb-md-4" matTooltip="Volver" role="button">⤶</span> Mis Tarjetas</h1>
         <div class="overflow-hidden rounded">
-            <div [style]="{'background-color':config.backgroundLightTransparent}" class="d-flex gap-3 flex-wrap p-2 p-md-4">
+            <div [style]="{'background-color':config.backgroundLightTransparent}" class="d-flex gap-3 justify-content-around flex-wrap p-2 p-md-4">
                 <h2 *ngIf="count_cards == 0" class="activeLinkVioletDark">Aún no se te han vinculado tarjetas.</h2>
                 <div class="container-card" *ngFor="let card of cards;let position_card=index">
                     <div class="title-card px-4 pb-1 pt-3 d-flex justify-content-between">
                         <p class="fs-5 fw-bold"><i class="bi bi-award"></i> {{card.title}}</p>
                     </div>
                     <div class="p-4">
-                        <div class="d-flex align-items-center justify-content-between gap-2 flex-wrap py-1 mb-3">
+                        <p class="congratulations-card fs-4">Gracias <span class="d-inline-block border-bottom w-75 ms-2 ps-2 fs-6">{{name_capitalize}}</span></p>
+                        <p class="text-end congratulations-card fs-5">por confiar en nuestro trabajo.</p>
+                        <div class="d-flex align-items-center justify-content-between gap-2 flex-wrap py-1 mb-3 mt-3">
                             <span *ngFor="let num of number_stars[position_card];let position=index" [ngClass]="{'unmarked-star no-action-star': (position + 1) > card.marked_stars,'marked-star': (position + 1) <= card.marked_stars}">{{ (((position + 1) > card.marked_stars) ? position + 1 : '') }}</span>
                         </div>
-                        <p class="description-card">{{card.desc}}</p>
-                        <div class="d-flex justify-content-end mt-3">
-                            <span class="badge" [ngClass]="{'bg-danger' : card.datediff <= 0}">{{ ((card.datediff > 0) ? card.datediff + ' días restantes' : 'Tarjeta Vencida') }}</span>
-                        </div>
+                        <p class="description-card fw-bold">{{card.desc}}</p>
+                        <small class="description-card mt-4 text-uppercase d-block text-center">{{ 'Tarjeta válida por ' + card.duration + ' días desde ' + card.date_create }}</small>
                     </div>
                 </div>
             </div>

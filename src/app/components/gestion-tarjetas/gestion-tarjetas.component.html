@@ -20,6 +20,7 @@
                             <tr>
                                 <th>Título</th>
                                 <th>Descripción</th>
+                                <th>Tipo</th>
                                 <th>Días de Duración</th>
                                 <th>Estrellas</th>
                                 <th style="width: 120px"></th>
@@ -37,10 +38,11 @@
                             <tr class="dtr-control" *ngFor="let card of cards">
                                 <td>{{card.title}}</td>
                                 <td>{{card.desc}}</td>
+                                <td>{{card.type}}</td>
                                 <td>{{card.duration}}</td>
                                 <td>{{card.stars}}</td>
                                 <td>
-                                    <i (click)="editCard(card.id,card.title,card.desc,card.duration,card.stars)" role="button" class="bi bi-pencil-square fs-4 me-3"></i>
+                                    <i (click)="editCard(card.id,card.title,card.desc,card.duration,card.stars,card.type)" role="button" class="bi bi-pencil-square fs-4 me-3"></i>
                                     <i (click)="deleteCard(card.id,card.title)" role="button" class="bi bi-trash fs-4"></i>
                                 </td>
                             </tr>

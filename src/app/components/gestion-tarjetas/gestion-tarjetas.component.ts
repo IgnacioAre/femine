@@ -46,20 +46,25 @@ export class GestionTarjetasComponent {
     $('#'+element).css('background-color',this.config.baseColorLight);
   }
 
-  editCard(id: number, title: string,desc: string, duration: number, stars: number){
-
+  editCard(id: number, title: string,desc: string, duration: number, stars: number, type: string){
 
     Swal.fire({
       title: "Editar Tarjeta",
       html:
-          '<div class="d-flex flex-column align-items-start w-75 m-auto"><p>Título:</p>' +
-          '<input id="swal-input1" type="text" class="swal2-input mt-0 ms-0 w-100" value="'+title+'"></div>' +
-          '<div class="mt-3 d-flex flex-column align-items-start w-75 m-auto"><p>Descripción:</p>' +
-          '<input id="swal-input2" type="text" class="swal2-input mt-0 ms-0 w-100" value="'+desc+'"></div>'+
+          '<div class="d-flex flex-column align-items-start w-75 m-auto"><p>Tipo:</p>' +
+          '<select id="swal-input1" class="swal2-input form-control fs-5 mt-0 ms-0 w-100">' +
+          '<option '+ ((type === "Estandar") ? 'selected' : '') +'>Estandar</option>' +
+          '<option '+ ((type === "Objetivo") ? 'selected' : '') +'>Objetivo</option>' +
+          '<option '+ ((type === "Giftcard") ? 'selected' : '') +'>Giftcard</option>' +
+          '</select></div>'+
+          '<div class="mt-3 d-flex flex-column align-items-start w-75 m-auto"><p>Título:</p>' +
+          '<input id="swal-input2" type="text" class="swal2-input mt-0 ms-0 w-100" value="'+title+'"></div>' +
+          '<div id="descCard" class="mt-3 d-flex flex-column align-items-start w-75 m-auto"><p>Descripción:</p>' +
+          '<input id="swal-input3" type="text" class="swal2-input mt-0 ms-0 w-100" value="'+desc+'"></div>'+
           '<div class="mt-3 d-flex flex-column align-items-start w-75 m-auto"><p>Días de Duración:</p>' +
-          '<input id="swal-input3" type="number" class="swal2-input mt-0 ms-0 w-100" value="'+duration+'"></div>' +
-          '<div class="mt-3 d-flex flex-column align-items-start w-75 m-auto"><p>Estrellas:</p>' +
-          '<input id="swal-input4" type="number" class="swal2-input mt-0 ms-0 w-100" value="'+stars+'"></div>',
+          '<input id="swal-input4" type="number" class="swal2-input mt-0 ms-0 w-100" value="'+duration+'"></div>' +
+          '<div id="starCard" class="mt-3 d-flex flex-column align-items-start w-75 m-auto"><p>Estrellas:</p>' +
+          '<input id="swal-input5" type="number" class="swal2-input mt-0 ms-0 w-100" value="'+stars+'"></div>',
       showCancelButton: true,
       cancelButtonText: 'Cancelar',
       confirmButtonText: 'Confirmar',
@@ -70,23 +75,22 @@ export class GestionTarjetasComponent {
                   $('#swal-input2').val(),
                   $('#swal-input3').val(),
                   $('#swal-input4').val(),
+                  $('#swal-input5').val(),
               ])
           })
       },
-      onOpen: function () {
-          $('#swal-input1').focus()
-      }
     }).then( (result:any) => {
 
       if (result.isConfirmed) {
-        let titleEdit = result.value[0];
-        let descEdit = result.value[1]; 
-        let durationEdit = result.value[2]; 
-        let starsEdit = result.value[3];    
-  
+        let typeEdit = result.value[0];
+        let titleEdit = result.value[1];
+        let descEdit = result.value[2];
+        let durationEdit = result.value[3];
+        let starsEdit = result.value[4];
+        
         try {
           
-           let res = this.authService.updateCard(id, titleEdit, descEdit, durationEdit, starsEdit);
+           let res = this.authService.updateCard(id, titleEdit, descEdit, typeEdit, durationEdit, starsEdit);
 
            if(res['status'] === 200){
             this.cards = this.authService.getCardsList();
@@ -114,6 +118,36 @@ export class GestionTarjetasComponent {
 
       }
       
+    });
+
+    if(type === 'Giftcard'){
+      $('#descCard input').fadeOut();
+      $('#descCard p').fadeOut();
+      $('#starCard input').fadeOut();
+      $('#starCard p').fadeOut();
+      setTimeout(()=>{$('#starCard input').val('0');},300);
+    }
+
+    $('#swal-input1').on('change',()=>{
+
+      let tipoSelect = $('#swal-input1');
+
+      if(tipoSelect.val() === 'Giftcard'){
+        $('#descCard input').fadeOut();
+        $('#descCard p').fadeOut();
+        $('#starCard input').fadeOut();
+        $('#starCard p').fadeOut();
+        setTimeout(()=>{$('#starCard input').val('0');},300);
+      }else if(tipoSelect.val() === 'Estandar' || tipoSelect.val() === 'Objetivo'){
+        $('#descCard input').fadeIn();
+        $('#descCard p').fadeIn();
+        $('#starCard input').val('');
+        $('#starCard input').fadeIn();
+        $('#starCard p').fadeIn();
+      }
+      
+      $('#swal-input2').focus();
+
     });
 
 

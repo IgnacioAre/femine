@@ -22,12 +22,36 @@ export class CreateCardComponent implements OnInit {
   public inputPassword = true;
 
   constructor(private _router: Router, private authService: AuthService){
-    this.card = new CardCreate('','','','');
+    this.card = new CardCreate('','','','','');
   }
 
   ngOnInit(): void {
     
     $(document).ready(()=>{
+
+      let tipoSelect = $('#tipoSelect');
+
+      tipoSelect.find('option:eq(0)').attr('selected', 'selected');
+      this.card.type = 'Estandar';
+
+      tipoSelect.on('change',(e:any)=>{
+        
+        if(tipoSelect.val() === 'Giftcard'){
+          $('#descCard').fadeOut();
+          $('#starCard').fadeOut();
+          this.card.stars = 0;
+          this.card.desc = '';
+        }else if(tipoSelect.val() === 'Estandar' || tipoSelect.val() === 'Objetivo'){
+          $('#descCard').fadeIn();
+          $('#starCard input').val('');
+          $('#starCard').fadeIn();
+          this.card.stars = '';
+        }
+        
+        $('#tituloInput').focus();
+
+      });
+
 
       setTimeout(() => {
 
@@ -44,6 +68,7 @@ export class CreateCardComponent implements OnInit {
 
     let title = this.card.title.toString();
     let desc = this.card.desc.toString();
+    let type = this.card.type.toString();
     let duration = this.card.duration;
     let stars = this.card.stars;
 
@@ -58,7 +83,7 @@ export class CreateCardComponent implements OnInit {
         return;
       }
 
-      if(stars === 0){
+      if(stars === ''){
         Swal.fire({
           title: "Error",
           text: 'El número de estrellas es obligatorio, intente nuevamente.'
@@ -66,7 +91,7 @@ export class CreateCardComponent implements OnInit {
         return;
       }
 
-      let res = this.authService.createCard(title,desc,duration,stars);
+      let res = this.authService.createCard(title,desc, type,duration,stars);
       
       if(res['status'] === 200){
         form.resetForm();

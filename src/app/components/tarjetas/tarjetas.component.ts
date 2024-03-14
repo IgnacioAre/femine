@@ -14,10 +14,24 @@ export class TarjetasComponent {
   public count_cards: number = 0;
   public number_stars:any = [];
   public client:any;
+  public name_capitalize = '';
 
   constructor(private authService: AuthService){
 
     this.client = JSON.parse(authService.getUser());
+
+    let name_split = [];
+
+    if(this.client.name.indexOf(' ') > -1){
+       name_split = this.client.name.split(' ');
+
+       name_split.forEach((n:any) => {
+          this.name_capitalize += n[0].toUpperCase() + n.slice(1).toLowerCase() + ' ';
+       });
+
+    }else{
+      this.name_capitalize += this.client.name[0].toUpperCase() + this.client.name.slice(1).toLowerCase();
+    }
 
     this.cards = this.authService.getUserCardsList(this.client.id);
     this.count_cards = this.cards.length;
