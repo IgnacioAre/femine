@@ -22,6 +22,7 @@ export class InicioComponent implements OnInit {
   constructor(private _router:Router, private authService: AuthService){
 
     this.cards = this.authService.getCardsList();
+    
     this.count_cards = this.cards.length;
 
     if(this.cards.length > 0){

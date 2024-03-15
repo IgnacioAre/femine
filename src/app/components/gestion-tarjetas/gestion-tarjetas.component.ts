@@ -161,6 +161,7 @@ export class GestionTarjetasComponent {
       showCancelButton: true,
       cancelButtonText: 'Cancelar',
       confirmButtonText: 'Confirmar',
+      icon: 'warning',
     }).then( (result:any) => {
 
       if (result.isConfirmed) {

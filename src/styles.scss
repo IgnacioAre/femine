@@ -204,6 +204,28 @@ p{
     background-size: 40px;
 }
 
+.gray-star{
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    background-color: #ccc;
+    clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+    transition: all 300ms;
+    cursor: pointer;
+}
+
+.gray-star:hover{
+    background-color: var(--violet-dark);
+}
+
+.no-action-gray{
+    cursor: default;
+}
+
+.no-action-gray:hover{
+    background-color: #ccc;
+}
+
 .violet-star{
     display: inline-block;
     width: 40px;

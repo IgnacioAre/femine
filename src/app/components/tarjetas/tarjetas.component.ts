@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { Configuracion } from 'src/app/models/configuracion';
 import { AuthService } from 'src/app/services/auth.service';
+import * as htmlToImage from 'html-to-image';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-tarjetas',
@@ -33,7 +35,10 @@ export class TarjetasComponent {
       this.name_capitalize += this.client.name[0].toUpperCase() + this.client.name.slice(1).toLowerCase();
     }
 
-    this.cards = this.authService.getUserCardsList(this.client.id);
+    console.log(this.client);
+    
+    this.cards = this.authService.getUserCardsList(this.client.id); 
+    console.log(this.cards);
     this.count_cards = this.cards.length;
     
     if(this.cards.length > 0){
@@ -44,5 +49,44 @@ export class TarjetasComponent {
     }
     
   }
+
+  downloadImage(id: number){
+
+    $('#controls_card_'+id).fadeOut('fast');
+    
+    setTimeout(() => {
+      
+      var node:any = document.getElementById('card_'+id);
+
+      htmlToImage.toPng(node)
+        .then(function (dataUrl) {        
+          var link = document.createElement("a");
+
+          document.body.appendChild(link);
+
+          link.setAttribute("href", dataUrl);
+          link.setAttribute("download", "Tarjeta-Femine.png");
+          link.click();
+
+          $('#controls_card_'+id).fadeIn();
+          $('#pencil_'+id).fadeIn();
+
+        })
+        .catch(function (error) {
+
+          Swal.fire({
+            title: "Error",
+            text: "Ha ocurrido un error y no se ha podido descargar el archivo.",
+            icon: 'error'
+          });
+          console.error('oops, ocurrió un error.', error);
+        });
+
+        $('#controls_card_'+id).fadeIn();
+
+    }, 300);
+    
+  }
+
 
 }

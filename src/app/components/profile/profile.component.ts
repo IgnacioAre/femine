@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Configuracion } from 'src/app/models/configuracion';
 import { AuthService } from 'src/app/services/auth.service';
+import * as htmlToImage from 'html-to-image';
 
 declare const $: any;
 declare const Swal: any;
@@ -49,7 +50,6 @@ export class ProfileComponent {
   updateCards(id:number){
     this.cards = this.authService.getUserCardsList(id);    
     console.log(this.cards);
-    
     this.count_cards = this.cards.length;
     if(this.cards.length > 0){
       for (let index = 0; index < this.cards.length; index++) {
@@ -66,6 +66,21 @@ export class ProfileComponent {
       if(star.hasClass('unmarked-star')){
         
         star.removeClass('unmarked-star').addClass('marked-star').text('');
+
+        $('.unmarked-star').map((index:number,element:any)=>{
+          let element_unmarked = $('span[data-card="'+star.data('card')+'"][data-value="'+element.innerText+'"]');
+          
+          if(element_unmarked.data('value') < star.data('value')){
+            element_unmarked.removeClass('unmarked-star').addClass('marked-star').text('');
+          }
+
+        });
+
+      }
+      
+      if(star.hasClass('gray-star')){
+        
+        star.removeClass('gray-star').addClass('violet-star').text('');
 
         $('.unmarked-star').map((index:number,element:any)=>{
           let element_unmarked = $('span[data-card="'+star.data('card')+'"][data-value="'+element.innerText+'"]');
@@ -158,6 +173,7 @@ export class ProfileComponent {
       showCancelButton: true,
       cancelButtonText: 'Cancelar',
       confirmButtonText: 'Confirmar',
+      icon: 'warning',
     }).then( (result:any) => {
 
       if (result.isConfirmed) {
@@ -270,6 +286,7 @@ export class ProfileComponent {
       showCancelButton: true,
       cancelButtonText: 'Cancelar',
       confirmButtonText: 'Confirmar',
+      icon: 'warning',
     }).then( (result:any) => {
 
       if (result.isConfirmed) {
@@ -323,6 +340,47 @@ export class ProfileComponent {
     }
 
   }
+
+  downloadImage(id: number){
+
+    $('#controls_card_'+id).fadeOut('fast');
+    $('#pencil_'+id).fadeOut('fast');
+    
+    setTimeout(() => {
+      
+      var node:any = document.getElementById('card_'+id);
+
+      htmlToImage.toPng(node)
+        .then(function (dataUrl) {        
+          var link = document.createElement("a");
+
+          document.body.appendChild(link);
+
+          link.setAttribute("href", dataUrl);
+          link.setAttribute("download", "Tarjeta-Femine.png");
+          link.click();
+
+          $('#controls_card_'+id).fadeIn();
+          $('#pencil_'+id).fadeIn();
+
+        })
+        .catch(function (error) {
+
+          Swal.fire({
+            title: "Error",
+            text: "Ha ocurrido un error y no se ha podido descargar el archivo.",
+            icon: 'error'
+          });
+          console.error('oops, ocurrió un error.', error);
+        });
+
+        $('#controls_card_'+id).fadeIn();
+        $('#pencil_'+id).fadeIn();
+
+    }, 300);
+    
+  }
+
 
 
 }

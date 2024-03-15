@@ -195,20 +195,23 @@
                     <h2 class="pb-0">Beneficios Disponibles</h2>
                     <a *ngIf="config.userRol === 'USER'" href="/tarjetas" class="fw-bold activeLinkVioletDark pt-2">Mis Tarjetas</a>
                 </div>
-                <div class="container-card w-100 mt-4" *ngFor="let card of cards;let position_card=index">
-                    <div class="title-card px-4 pb-1 pt-3 d-flex justify-content-between">
+
+                <!-- Lógica cards -->
+                <div class="container-card w-100"  [ngClass]="{'mt-4': card.type != 'Giftcard'}" *ngFor="let card of cards;let position_card=index">
+                    <div *ngIf="card.type != 'Giftcard'" class="title-card px-4 pb-1 pt-3 d-flex justify-content-between">
                         <p class="fs-5 fw-bold"><i class="bi bi-award"></i> {{card.title}}</p>
                     </div>
-                    <div class="p-4">
-                        <p class="congratulations-card fs-5">¡ Gracias <span class="d-inline-block border-bottom w-75 ms-2 ps-2"></span></p>
-                        <p class="text-end congratulations-card fs-5">por confiar en nuestro trabajo !</p>
-                        <div class="d-flex align-items-center justify-content-between gap-2 flex-wrap py-1 mb-3 mt-3">
-                            <span *ngFor="let num of number_stars[position_card];let position=index" class="marked-star"></span>
+                    <div *ngIf="card.type != 'Giftcard'" class="p-4">
+                        <p class="congratulations-card fs-4">Gracias <span class="d-inline-block border-bottom w-75 ms-2 ps-2 fs-6"></span></p>
+                        <p class="text-end congratulations-card fs-5">por confiar en nuestro trabajo.</p>
+                        <div class="d-flex align-items-center justify-content-between gap-2 flex-wrap py-1 mb-3">
+                            <span *ngFor="let num of number_stars[position_card];let position=index" class="marked-star" [ngClass]="{'violet-star': card.type == 'Objetivo' && (position + 1) == card.stars}"></span>
                         </div>
                         <p class="description-card fw-bold">{{card.desc}}</p>
-                        <small class="description-card mt-4 text-uppercase d-block text-center">{{ 'Tarjeta válida por ' + card.duration + ' días desde' }}<span class="ms-4 me-3">/</span><span class="mx-3">/</span></small>
+                        <small class="description-card mt-4 text-uppercase d-block text-center">{{ 'Tarjeta válida por ' + card.duration + ' días desde ' }}<span class="ms-4 me-3">/</span><span class="mx-3">/</span></small>
                     </div>
                 </div>
+                <!-- Fin lógica cards -->
             </article>
         </aside>
 

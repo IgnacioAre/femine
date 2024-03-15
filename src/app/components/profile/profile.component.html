@@ -14,13 +14,14 @@
             </div>
             <div [style]="{'background-color':config.backgroundLightTransparent}" class="d-flex gap-3 justify-content-around flex-wrap p-2 p-md-4">
                 <h2 *ngIf="count_cards == 0" class="activeLinkVioletDark">Aún no se han vinculado tarjetas a este cliente.</h2>
-                <div class="container-card" *ngFor="let card of cards;let position_card=index">
+                <!-- Lógica cards -->
+                <div class="container-card" id="card_{{card.id_assigned}}" *ngFor="let card of cards;let position_card=index">
                     <div class="title-card px-4 pb-1 pt-3 d-flex justify-content-between">
-                        <p *ngIf="card.type == 'Estandar' || card.type == 'Objetivo'" class="fs-5 fw-bold"><i class="bi bi-award"></i> {{card.title}}</p>
-                        <p *ngIf="card.type == 'Giftcard'" class="fs-5 fw-bold"><i class="bi bi-gift"></i> GIFT CARD</p>
-                        <div>
-                            <i *ngIf="card.type == 'Giftcard'" role="button" matTooltip="Giftcard Utilizado" class="bi bi-check2-circle fs-4 golden-icon-card me-2"></i>
-                            <i role="button" matTooltip="Descargar" class="bi bi-cloud-arrow-down fs-4 golden-icon-card me-2"></i>
+                        <p *ngIf="card.type == 'Estandar' || card.type == 'Objetivo'" class="fs-5 fw-bold w-75"><i class="bi bi-award"></i> {{card.title}}</p>
+                        <p *ngIf="card.type == 'Giftcard'" class="fs-5 fw-bold w-75"><i class="bi bi-gift"></i> GIFT CARD</p>
+                        <div id="controls_card_{{card.id_assigned}}" class="w-25 d-flex gap-2 justify-content-end">
+                            <i *ngIf="card.type == 'Giftcard'" role="button" matTooltip="Giftcard Utilizado" class="bi bi-check2-circle fs-4 golden-icon-card"></i>
+                            <i (click)="downloadImage(card.id_assigned)" role="button" matTooltip="Descargar" class="bi bi-cloud-arrow-down fs-4 golden-icon-card"></i>
                             <i (click)="deleteCardAssigned(card.id_assigned,card.title)" role="button" matTooltip="Eliminar Tarjeta Vinculada" class="bi bi-trash fs-4 delete-card"></i>
                         </div>
                     </div>
@@ -29,24 +30,25 @@
                         <p *ngIf="card.type == 'Estandar' || card.type == 'Objetivo'" class="text-end congratulations-card fs-5">por confiar en nuestro trabajo.</p>
                         <p *ngIf="card.type == 'Giftcard'" class="congratulations-card fs-4 text-center mb-4">Que disfrutes tu regalo, te quiero mucho!</p>
                         <div *ngIf="card.type == 'Estandar' || card.type == 'Objetivo'" class="d-flex align-items-center justify-content-between gap-2 flex-wrap py-1 mb-3">
-                            <span *ngFor="let num of number_stars[position_card];let position=index" (click)="updateStars(card.id_assigned,position_card,(position + 1))" [attr.data-card]="position_card" [attr.data-card-assigned]="card.id_assigned" [attr.data-value]="position + 1" [ngClass]="{'unmarked-star': (position + 1) > card.marked_stars,'marked-star': (position + 1) <= card.marked_stars}">{{ (((position + 1) > card.marked_stars) ? position + 1 : '') }}</span>
+                            <span *ngFor="let num of number_stars[position_card];let position=index" (click)="updateStars(card.id_assigned,position_card,(position + 1))" [attr.data-card]="position_card" [attr.data-card-assigned]="card.id_assigned" [attr.data-value]="position + 1" [ngClass]="{'unmarked-star': (card.type == 'Objetivo' && (position + 1) < card.stars && (position + 1) > card.marked_stars) || (card.type != 'Objetivo' && (position + 1) > card.marked_stars),'marked-star': (position + 1) <= card.marked_stars, 'gray-star' : card.type == 'Objetivo' && (position + 1) == card.stars && (position + 1) != card.marked_stars, 'violet-star': card.type == 'Objetivo'  && (position + 1) == card.marked_stars && (position + 1) == card.stars}">{{ (((card.type == 'Objetivo' && (position + 1) < card.stars && (position + 1) > card.marked_stars) || (card.type != 'Objetivo' && (position + 1) > card.marked_stars) ) ? position + 1 : '') }}</span>
                         </div>
                         <p *ngIf="card.type == 'Estandar' || card.type == 'Objetivo'" class="description-card fw-bold">{{card.desc}}</p>
                         <div *ngIf="card.type == 'Giftcard'" class="d-flex justify-content-center align-items-center gap-3 mb-3">
-                            <span class="fw-bold description-card">VALE POR:</span>
-                            <div class="d-flex gap-2 align-items-center w-75 ms-3 position-relative">
+                            <span class="fw-bold description-card w-25">VALE POR:</span>
+                            <div class="d-flex gap-2 align-items-center w-75 position-relative">
                                 <input [id]="'vale_giftcard_'+card.id_assigned" class="rounded-pill w-100 p-3 border-none button-card pe-5" type="text" placeholder="Escribe aquí..." value="{{card.message_giftcard}}">
-                                <i role="button" matTooltip="Guardar" class="bi bi-pencil golden-icon-card fs-4 position-absolute end-0 me-3" (click)="updateGiftCard(card.id_assigned)"></i>
+                                <i id="pencil_{{card.id_assigned}}" role="button" matTooltip="Guardar" class="bi bi-pencil golden-icon-card fs-4 position-absolute end-0 me-3" (click)="updateGiftCard(card.id_assigned)"></i>
                             </div>
                         </div>
                         <div *ngIf="card.type == 'Giftcard'" class="d-flex justify-content-center align-items-center gap-3">
-                            <span class="fw-bold description-card">DE PARTE DE:</span>
+                            <span class="fw-bold description-card w-25">DE PARTE DE:</span>
                             <span class="bg-white rounded-pill p-3 w-75">{{name_capitalize}}</span>
                         </div>
                         <small *ngIf="card.type == 'Estandar' || card.type == 'Objetivo'" class="description-card mt-4 text-uppercase d-block text-center">{{ 'Tarjeta válida por ' + card.duration + ' días desde ' + card.date_create }}</small>
                         <small *ngIf="card.type == 'Giftcard'" class="description-card mt-4 text-uppercase d-block text-center">{{ 'Válido hasta el ' + card.date_valide }}</small>
                     </div>
                 </div>
+                <!-- Fin lógica cards -->
             </div>
         </div>
 
