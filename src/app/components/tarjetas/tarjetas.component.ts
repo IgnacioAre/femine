@@ -16,9 +16,12 @@ export class TarjetasComponent {
   public count_cards: number = 0;
   public number_stars:any = [];
   public client:any;
-  public name_capitalize = '';
+  public name_capitalize: string = '';
+  public window_width:any = 0;
 
   constructor(private authService: AuthService){
+
+    this.window_width = $(window).width();
 
     this.client = JSON.parse(authService.getUser());
 
@@ -52,7 +55,7 @@ export class TarjetasComponent {
 
   downloadImage(id: number){
 
-    $('#controls_card_'+id).fadeOut('fast');
+    $('#download_card_'+id).fadeOut('fast');
     
     setTimeout(() => {
       
@@ -68,9 +71,6 @@ export class TarjetasComponent {
           link.setAttribute("download", "Tarjeta-Femine.png");
           link.click();
 
-          $('#controls_card_'+id).fadeIn();
-          $('#pencil_'+id).fadeIn();
-
         })
         .catch(function (error) {
 
@@ -80,11 +80,15 @@ export class TarjetasComponent {
             icon: 'error'
           });
           console.error('oops, ocurrió un error.', error);
+
         });
 
-        $('#controls_card_'+id).fadeIn();
+        setTimeout(() => {
+          $('#download_card_'+id).fadeIn();
+        }, 500);
 
-    }, 300);
+
+    }, 500);
     
   }
 

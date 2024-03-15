@@ -20,9 +20,12 @@ export class ProfileComponent {
   public cards_assign_option:any = [];
   public number_stars:any = [];
   public client:any;
-  public name_capitalize = '';
+  public name_capitalize:string = '';
+  public window_width = 0;
 
   constructor(private route: ActivatedRoute,private authService: AuthService){
+
+    this.window_width = $(window).width();
 
     let param_id = ((this.route.snapshot.paramMap.get('id')) ? this.route.snapshot.paramMap.get('id') : '');
     let id:number = ((param_id !== null) ? parseInt(param_id) : 0);
@@ -48,8 +51,7 @@ export class ProfileComponent {
   }
 
   updateCards(id:number){
-    this.cards = this.authService.getUserCardsList(id);    
-    console.log(this.cards);
+    this.cards = this.authService.getUserCardsList(id);  
     this.count_cards = this.cards.length;
     if(this.cards.length > 0){
       for (let index = 0; index < this.cards.length; index++) {
@@ -343,7 +345,9 @@ export class ProfileComponent {
 
   downloadImage(id: number){
 
-    $('#controls_card_'+id).fadeOut('fast');
+    $('#used_card_'+id).fadeOut('fast');
+    $('#download_card_'+id).fadeOut('fast');
+    $('#delete_card_'+id).fadeOut('fast');
     $('#pencil_'+id).fadeOut('fast');
     
     setTimeout(() => {
@@ -360,9 +364,6 @@ export class ProfileComponent {
           link.setAttribute("download", "Tarjeta-Femine.png");
           link.click();
 
-          $('#controls_card_'+id).fadeIn();
-          $('#pencil_'+id).fadeIn();
-
         })
         .catch(function (error) {
 
@@ -372,15 +373,52 @@ export class ProfileComponent {
             icon: 'error'
           });
           console.error('oops, ocurrió un error.', error);
+
         });
 
-        $('#controls_card_'+id).fadeIn();
-        $('#pencil_'+id).fadeIn();
+        setTimeout(() => {
+          $('#used_card_'+id).fadeIn();
+          $('#download_card_'+id).fadeIn();
+          $('#delete_card_'+id).fadeIn();
+          $('#pencil_'+id).fadeIn();
+        }, 500);
 
-    }, 300);
+
+    }, 500);
     
   }
 
+
+  giftcardUsed(id_assigned: number) {
+    
+    Swal.fire({
+      title: "Confirmación",
+      html: '¿Seguro que desea utilizar este giftcard?',
+      showCancelButton: true,
+      cancelButtonText: 'Cancelar',
+      confirmButtonText: 'Confirmar',
+      icon: 'warning',
+    }).then( (result:any) => {
+
+      if (result.isConfirmed) {
+
+        let res = this.authService.giftcardUsed(id_assigned);
+
+        if(res['status'] === 200){
+          this.cards = this.authService.getUserCardsList(this.client.id);
+         }else if(res['status'] === 202){
+          Swal.fire({
+            title: "Error",
+            text: res['msg'],
+            icon: 'error'
+          });
+        }
+
+      }
+
+    });
+
+  }
 
 
 }

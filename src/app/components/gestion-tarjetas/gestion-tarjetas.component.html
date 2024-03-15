@@ -10,20 +10,20 @@
 
             <div class="col col-12">
 
-                <a id="elementoCrearTarjeta" class="adminOption d-block w-50 text-center my-4 py-4 text-decoration-none m-auto fs-2 {{config.textColorClass}}" routerLink="/admin/crear-tarjeta" [style]="{'background-color':config.baseColorLight,'box-shadow':'0px 0px 10px ' + config.baseColorLight}" #elementoCrearTarjeta (mouseenter)="adminOptionHover(elementoCrearTarjeta.id)" (mouseleave)="adminOptionLeave(elementoCrearTarjeta.id)">Crear Tarjeta</a>
+                <a id="elementoCrearTarjeta" [ngClass]="{'w-75' : window_width < 700,'w-50' : window_width > 700}" class="adminOption d-block text-center my-4 py-4 text-decoration-none m-auto fs-2 {{config.textColorClass}}" routerLink="/admin/crear-tarjeta" [style]="{'background-color':config.baseColorLight,'box-shadow':'0px 0px 10px ' + config.baseColorLight}" #elementoCrearTarjeta (mouseenter)="adminOptionHover(elementoCrearTarjeta.id)" (mouseleave)="adminOptionLeave(elementoCrearTarjeta.id)">Crear Tarjeta</a>
 
                 <br>
 
-                <div class="w-75 m-auto">
+                <div class="w-100 px-2 px-md-5 m-auto">
                     <table id="tablaGestionTarjetas" class="table table-striped table-secondary shadow display nowrap responsive w-100" [ngClass]="{'table-default' : config.colors == 'violet','table-secondary' : config.colors == 'dark'}">
                         <thead>
                             <tr>
                                 <th>Título</th>
-                                <th>Descripción</th>
-                                <th>Tipo</th>
-                                <th>Días de Duración</th>
-                                <th>Estrellas</th>
-                                <th style="width: 120px"></th>
+                                <th *ngIf="window_width > 700">Descripción</th>
+                                <th *ngIf="window_width > 700">Tipo</th>
+                                <th *ngIf="window_width > 700">Días de Duración</th>
+                                <th *ngIf="window_width > 700">Estrellas</th>
+                                <th style="width: 120px" *ngIf="window_width > 700"></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -36,12 +36,13 @@
                             </tr>
 
                             <tr class="dtr-control" *ngFor="let card of cards">
-                                <td>{{card.title}}</td>
-                                <td>{{card.desc}}</td>
-                                <td>{{card.type}}</td>
-                                <td>{{card.duration}}</td>
-                                <td>{{card.stars}}</td>
-                                <td>
+                                <td *ngIf="window_width < 700" (click)="editCard(card.id,card.title,card.desc,card.duration,card.stars,card.type)">{{card.title + ' (' + firstLetter(card.type) + ')'}}</td>
+                                <td *ngIf="window_width > 700">{{card.title}}</td>
+                                <td *ngIf="window_width > 700">{{card.desc}}</td>
+                                <td *ngIf="window_width > 700">{{card.type}}</td>
+                                <td *ngIf="window_width > 700">{{card.duration}}</td>
+                                <td *ngIf="window_width > 700">{{card.stars}}</td>
+                                <td *ngIf="window_width > 700">
                                     <i (click)="editCard(card.id,card.title,card.desc,card.duration,card.stars,card.type)" role="button" class="bi bi-pencil-square fs-4 me-3"></i>
                                     <i (click)="deleteCard(card.id,card.title)" role="button" class="bi bi-trash fs-4"></i>
                                 </td>

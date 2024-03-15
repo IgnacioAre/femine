@@ -17,4 +17,4 @@ export var Configuracion = {
 };
 
 
-export var apiUrl = 'http://localhost:8002/api/';
+export var apiUrl = 'http://localhost:8003/api/';

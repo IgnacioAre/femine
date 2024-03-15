@@ -18,8 +18,11 @@ export class GestionTarjetasComponent {
   public cardsCount = -1;
   public table:any;
   public cards:any = [];
+  public window_width = 0;
 
   constructor(private authService: AuthService){
+
+    this.window_width = $(window).width();
 
     this.cards = this.authService.getCardsList();
     this.cardsCount = this.cards.length;
@@ -51,19 +54,19 @@ export class GestionTarjetasComponent {
     Swal.fire({
       title: "Editar Tarjeta",
       html:
-          '<div class="d-flex flex-column align-items-start w-75 m-auto"><p>Tipo:</p>' +
+          '<div class="d-flex flex-column align-items-start w-100 px-1 px-md-5 m-auto"><p>Tipo:</p>' +
           '<select id="swal-input1" class="swal2-input form-control fs-5 mt-0 ms-0 w-100">' +
           '<option '+ ((type === "Estandar") ? 'selected' : '') +'>Estandar</option>' +
           '<option '+ ((type === "Objetivo") ? 'selected' : '') +'>Objetivo</option>' +
           '<option '+ ((type === "Giftcard") ? 'selected' : '') +'>Giftcard</option>' +
           '</select></div>'+
-          '<div class="mt-3 d-flex flex-column align-items-start w-75 m-auto"><p>Título:</p>' +
+          '<div class="mt-3 d-flex flex-column align-items-start w-100 px-1 px-md-5 m-auto"><p>Título:</p>' +
           '<input id="swal-input2" type="text" class="swal2-input mt-0 ms-0 w-100" value="'+title+'"></div>' +
-          '<div id="descCard" class="mt-3 d-flex flex-column align-items-start w-75 m-auto"><p>Descripción:</p>' +
+          '<div id="descCard" class="mt-3 d-flex flex-column align-items-start w-100 px-1 px-md-5 m-auto"><p>Descripción:</p>' +
           '<input id="swal-input3" type="text" class="swal2-input mt-0 ms-0 w-100" value="'+desc+'"></div>'+
-          '<div class="mt-3 d-flex flex-column align-items-start w-75 m-auto"><p>Días de Duración:</p>' +
+          '<div class="mt-3 d-flex flex-column align-items-start w-100 px-1 px-md-5 m-auto"><p>Días de Duración:</p>' +
           '<input id="swal-input4" type="number" class="swal2-input mt-0 ms-0 w-100" value="'+duration+'"></div>' +
-          '<div id="starCard" class="mt-3 d-flex flex-column align-items-start w-75 m-auto"><p>Estrellas:</p>' +
+          '<div id="starCard" class="mt-3 d-flex flex-column align-items-start w-100 px-1 px-md-5 m-auto"><p>Estrellas:</p>' +
           '<input id="swal-input5" type="number" class="swal2-input mt-0 ms-0 w-100" value="'+stars+'"></div>',
       showCancelButton: true,
       cancelButtonText: 'Cancelar',
@@ -88,33 +91,47 @@ export class GestionTarjetasComponent {
         let durationEdit = result.value[3];
         let starsEdit = result.value[4];
         
-        try {
-          
-           let res = this.authService.updateCard(id, titleEdit, descEdit, typeEdit, durationEdit, starsEdit);
+    
+        if(titleEdit !== ''){
+          try {
+            
+            let res = this.authService.updateCard(id, titleEdit, descEdit, typeEdit, durationEdit, starsEdit);
 
-           if(res['status'] === 200){
-            this.cards = this.authService.getCardsList();
-           }else if(res['status'] === 202){
+            if(res['status'] === 200){
+              this.cards = this.authService.getCardsList();
+            }else if(res['status'] === 202){
+              Swal.fire({
+                title: "Error",
+                text: res['msg'],
+                icon: 'error'
+              });
+            }else{
+              Swal.fire({
+                title: "Error",
+                text: "Ha ocurrido un error y no has podido actualizar la tarjeta.",
+                icon: 'error'
+              });
+            }
+
+          } catch (error) {
             Swal.fire({
               title: "Error",
-              text: res['msg'],
-              icon: 'error'
+              text: 'Lo siento, ocurrió un error inesperado.'
             });
-          }else{
+            console.error("Error al actualizar tarjeta: ", error);
+          }
+        }else{
+
+          if(titleEdit === ''){
             Swal.fire({
               title: "Error",
-              text: "Ha ocurrido un error y no has podido actualizar la tarjeta.",
+              text: 'El título no puede estar vacio.',
               icon: 'error'
             });
           }
 
-        } catch (error) {
-          Swal.fire({
-            title: "Error",
-            text: 'Lo siento, ocurrió un error inesperado.'
-          });
-           console.error("Error al actualizar tarjeta: ", error);
         }
+
 
       }
       
@@ -138,7 +155,7 @@ export class GestionTarjetasComponent {
         $('#starCard input').fadeOut();
         $('#starCard p').fadeOut();
         setTimeout(()=>{$('#starCard input').val('0');},300);
-      }else if(tipoSelect.val() === 'Estandar' || tipoSelect.val() === 'Objetivo'){
+      }else if((tipoSelect.val() === 'Estandar' || tipoSelect.val() === 'Objetivo') && type === 'Giftcard'){
         $('#descCard input').fadeIn();
         $('#descCard p').fadeIn();
         $('#starCard input').val('');
@@ -191,6 +208,12 @@ export class GestionTarjetasComponent {
       }
       
     });
+
+  }
+
+  firstLetter(str: string){
+
+    return str.substring(0,3).toUpperCase();
 
   }
 

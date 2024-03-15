@@ -11,6 +11,7 @@
 :root{
     --violet: #B554F3;
     --violet-dark: #860587;
+    --red: #d60909;
 }
 
 html, body { 
@@ -239,7 +240,7 @@ p{
 }
 
 .delete-card:hover{
-    color: rgb(214, 9, 9);
+    color: var(--red);
 }
 
 .golden-icon-card{
@@ -254,6 +255,14 @@ p{
 .button-card{
     border: none;
     outline-color: goldenrod;
+}
+
+.fs-sm{
+    font-size: 7pt;
+}
+
+.fs-md{
+    font-size: 10pt;
 }
 
 @media screen and (max-width: 768px) {

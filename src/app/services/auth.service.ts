@@ -537,6 +537,31 @@ export class AuthService {
 
     }
 
+    giftcardUsed(id_assigned: number){
+
+        let response:any = [];
+
+        $.ajax({
+            url: apiUrl + 'update-used-giftcard',
+            method: 'POST',
+            async: false,
+            dataType: 'JSON',
+            data: {
+                id_assigned: id_assigned,
+            },
+            success: (res:string, textStatus: string, jqXHR: any) => {
+                response['msg'] = res;
+                response['status'] = jqXHR.status;
+            },
+            error: (jqXHR:any, textStatus:any)=>{
+                response['msg'] = 'Error en la consulta: '+textStatus;
+                response['status'] = 400;
+            }
+        });
+
+        return response;
+
+    }
 
     setColors(colors: string){
         this.storageService.setColors(colors);
