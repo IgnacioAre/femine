@@ -61,8 +61,6 @@ export class RegisterComponent implements OnInit {
       }
 
       let res = this.authService.register(name,subname,document,password);
-    
-      console.log(res);
       
       if(res['status'] === 200){
         form.resetForm();

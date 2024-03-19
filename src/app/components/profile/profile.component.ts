@@ -349,6 +349,9 @@ export class ProfileComponent {
     $('#download_card_'+id).fadeOut('fast');
     $('#delete_card_'+id).fadeOut('fast');
     $('#pencil_'+id).fadeOut('fast');
+    $('#title_card_'+id).addClass('w-100');
+    $('#action_card_'+id).removeClass('w-25');
+    $('#water_mark_'+id).addClass('opacity-01');
     
     setTimeout(() => {
       
@@ -381,6 +384,9 @@ export class ProfileComponent {
           $('#download_card_'+id).fadeIn();
           $('#delete_card_'+id).fadeIn();
           $('#pencil_'+id).fadeIn();
+          $('#title_card_'+id).removeClass('w-100');
+          $('#action_card_'+id).addClass('w-25');
+          $('#water_mark_'+id).addClass('d-none');
         }, 500);
 
 

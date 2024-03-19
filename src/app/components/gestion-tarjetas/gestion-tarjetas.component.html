@@ -36,7 +36,7 @@
                             </tr>
 
                             <tr class="dtr-control" *ngFor="let card of cards">
-                                <td *ngIf="window_width < 700" (click)="editCard(card.id,card.title,card.desc,card.duration,card.stars,card.type)">{{card.title + ' (' + firstLetter(card.type) + ')'}}</td>
+                                <td *ngIf="window_width < 700" (click)="mobileActionCard(card.id,card.title,card.desc,card.duration,card.stars,card.type)">{{card.title + ' (' + firstLetter(card.type) + ')'}}</td>
                                 <td *ngIf="window_width > 700">{{card.title}}</td>
                                 <td *ngIf="window_width > 700">{{card.desc}}</td>
                                 <td *ngIf="window_width > 700">{{card.type}}</td>

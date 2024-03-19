@@ -44,17 +44,16 @@ export class AuthService {
                     
                     if(save){
                         this.config.userDocument = document;
-                        this.config.userName = user.name;
-                        this.config.userRol = user.rol;
                         this.config.userSave = true;
                         this.setSave('true');
                     }else{
                         this.setSave('false');
                         this.config.userDocument = '';
-                        this.config.userName = '';
-                        this.config.userRol = '';
                         this.config.userSave = false;
                     }
+
+                    this.config.userName = user.name;
+                    this.config.userRol = user.rol;
 
                 }
                 

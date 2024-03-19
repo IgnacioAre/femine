@@ -15,11 +15,11 @@
             <div [style]="{'background-color':config.backgroundLightTransparent}" class="d-flex gap-3 justify-content-around flex-wrap p-2 p-md-4 pt-3">
                 <h2 *ngIf="count_cards == 0" class="activeLinkVioletDark">Aún no se han vinculado tarjetas a este cliente.</h2>
                 <!-- Lógica cards -->
-                <div class="container-card" id="card_{{card.id_assigned}}" *ngFor="let card of cards;let position_card=index">
+                <div class="container-card position-relative" id="card_{{card.id_assigned}}" *ngFor="let card of cards;let position_card=index">
                     <div class="title-card px-4 pb-1 pt-3 d-flex justify-content-between">
-                        <p *ngIf="card.type == 'Estandar' || card.type == 'Objetivo'" [ngClass]="{'fs-6': window_width < 700, 'fs-5': window_width > 700}" class="fw-bold w-75"><i class="bi bi-award"></i> {{card.title}}</p>
-                        <p *ngIf="card.type == 'Giftcard'" [ngClass]="{'fs-6': window_width < 700, 'fs-5': window_width > 700}" class="fw-bold w-75"><i class="bi bi-gift"></i> GIFT CARD</p>
-                        <div class="w-25 d-flex gap-2 justify-content-end">
+                        <p id="title_card_{{card.id_assigned}}" *ngIf="card.type == 'Estandar' || card.type == 'Objetivo'" [ngClass]="{'fs-6': window_width < 700, 'fs-5': window_width > 700}" class="fw-bold w-75"><i class="bi bi-award"></i> {{card.title}}</p>
+                        <p id="title_card_{{card.id_assigned}}" *ngIf="card.type == 'Giftcard'" [ngClass]="{'fs-6': window_width < 700, 'fs-5': window_width > 700}" class="fw-bold w-75"><i class="bi bi-gift"></i> GIFT CARD</p>
+                        <div id="action_card_{{card.id_assigned}}" class="w-25 d-flex gap-2 justify-content-end">
                             <i id="used_card_{{card.id_assigned}}" (click)="giftcardUsed(card.id_assigned)" *ngIf="card.type == 'Giftcard' && card.status_giftcard == 0" role="button" matTooltip="Giftcard Utilizado" [ngClass]="{'fs-5': window_width < 700, 'fs-4': window_width > 700}" class="bi bi-check2-circle golden-icon-card"></i>
                             <i id="download_card_{{card.id_assigned}}" (click)="downloadImage(card.id_assigned)" role="button" matTooltip="Descargar" [ngClass]="{'fs-5': window_width < 700, 'fs-4': window_width > 700}" class="bi bi-cloud-arrow-down golden-icon-card"></i>
                             <i id="delete_card_{{card.id_assigned}}" (click)="deleteCardAssigned(card.id_assigned,card.title)" role="button" matTooltip="Eliminar Tarjeta Vinculada" [ngClass]="{'fs-5': window_width < 700, 'fs-4': window_width > 700}" class="bi bi-trash delete-card"></i>
@@ -47,6 +47,7 @@
                         <small *ngIf="card.type == 'Estandar' || card.type == 'Objetivo'" class="description-card mt-4 text-uppercase d-block text-center">{{ 'Tarjeta válida por ' + card.duration + ' días desde ' + card.date_create }}</small>
                         <small *ngIf="card.type == 'Giftcard'" class="description-card mt-4 text-uppercase d-block text-center" [ngClass]="{'fw-bold': card.status_giftcard == 1}">{{ (card.status_giftcard == 0) ? 'Válido hasta el ' + card.date_valide : 'Giftcard Utilizado' }}</small>
                     </div>
+                    <img id="water_mark_{{card.id_assigned}}" src="../../../assets/img/femine.png" alt="Logo" class="water-mark">
                 </div>
                 <!-- Fin lógica cards -->
             </div>

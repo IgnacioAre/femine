@@ -63,27 +63,28 @@ export class LoginComponent implements OnInit {
       let res = this.authService.login(this.user.document.toString(),this.user.password.toString(), save);
       
       if(res.status === 200){
-
-        let complete_name = this.config.userName;
-    
-        let name_split = [];
-        let name_capitalize = '';
-  
-  
-        if(complete_name.indexOf(' ') > -1){
-          name_split = complete_name.split(' ');
-  
-          name_split.forEach((n:any) => {
-              name_capitalize += n[0].toUpperCase() + n.slice(1).toLowerCase() + ' ';
-          });
-  
-        }else{
-          name_capitalize += complete_name[0].toUpperCase() + complete_name.slice(1).toLowerCase();
-        }
-
+        
         this._router.navigate(['/inicio']);
 
         if(this.config.userRol === 'ADMIN'){
+
+          let complete_name = this.config.userName;
+    
+          let name_split = [];
+          let name_capitalize = '';
+    
+    
+          if(complete_name.indexOf(' ') > -1){
+            name_split = complete_name.split(' ');
+    
+            name_split.forEach((n:any) => {
+                name_capitalize += n[0].toUpperCase() + n.slice(1).toLowerCase() + ' ';
+            });
+    
+          }else{
+            name_capitalize += complete_name[0].toUpperCase() + complete_name.slice(1).toLowerCase();
+          }
+
           Swal.fire({
             title: "¡Has iniciado sesión como administrador!",
             text: "Bienvenido " + name_capitalize,
@@ -100,7 +101,7 @@ export class LoginComponent implements OnInit {
       }else{
         Swal.fire({
           title: "Error",
-          text: "Ha ocurrido un error y no has podido actualizar al usuario.",
+          text: "Ha ocurrido un error y no has podido iniciar sesión.",
           icon: 'error'
         });
       }

@@ -1,5 +1,15 @@
-<main class="h-100" [style]="{'background-image':'url(\'../../../assets/img/fondoVioletaMovimiento.svg\')'}">
+<main [style]="{'background-image':'url(\'../../../assets/img/fondoVioletaMovimiento.svg\')'}">
 
-    <h2>Lo siento, no se a encontrado esta página</h2>
+    <section class="overflow-hidden rounded mx-1 mx-md-5">
+
+        <h1 class="py-4 text-light d-flex justify-content-center position-relative mb-0 px-3" [style]="{'background-color':config.backgroundTitle,'border-bottom':'5px solid '+config.baseColorDark}"><span routerLink="/inicio" [ngClass]="{'span-circle me-2':window_width < 450, 'arrowBack pt-4 ps-3 pt-md-0 ps-md-0 pb-md-4' : window_width > 450}" matTooltip="Volver" role="button">⤶</span> SITIO WEB NO DISPONIBLE</h1>
+        <div class="overflow-hidden rounded">
+            <div [style]="{'background-color':config.backgroundLightTransparent}" class="d-flex gap-3 flex-column justify-content-center align-items-center py-5 px-3">
+                <h2>Lo siento, la página a la que intentas acceder no se encuentra en nuestro servidor.</h2>
+                <img id="error-404-img" src="../../../assets/img/error_404.svg" data-aos="zoom-out-up" alt="Error 404">
+            </div>
+        </div>
+
+    </section>
 
 </main>

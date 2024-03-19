@@ -37,11 +37,8 @@ export class TarjetasComponent {
     }else{
       this.name_capitalize += this.client.name[0].toUpperCase() + this.client.name.slice(1).toLowerCase();
     }
-
-    console.log(this.client);
     
     this.cards = this.authService.getUserCardsList(this.client.id); 
-    console.log(this.cards);
     this.count_cards = this.cards.length;
     
     if(this.cards.length > 0){
@@ -56,6 +53,9 @@ export class TarjetasComponent {
   downloadImage(id: number){
 
     $('#download_card_'+id).fadeOut('fast');
+    $('#title_card_'+id).addClass('w-100');
+    $('#action_card_'+id).removeClass('w-25');
+    $('#water_mark_'+id).addClass('opacity-01');
     
     setTimeout(() => {
       
@@ -85,6 +85,9 @@ export class TarjetasComponent {
 
         setTimeout(() => {
           $('#download_card_'+id).fadeIn();
+          $('#title_card_'+id).removeClass('w-100');
+          $('#action_card_'+id).addClass('w-25');
+          $('#water_mark_'+id).addClass('d-none');
         }, 500);
 
 

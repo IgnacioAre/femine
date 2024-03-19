@@ -18,3 +18,4 @@ export var Configuracion = {
 
 
 export var apiUrl = 'http://localhost:8003/api/';
+// export var apiUrl = 'https://api.novauy.com/api/';

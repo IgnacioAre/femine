@@ -49,6 +49,26 @@ export class GestionTarjetasComponent {
     $('#'+element).css('background-color',this.config.baseColorLight);
   }
 
+  mobileActionCard(id: number, title: string,desc: string, duration: number, stars: number, type: string){
+
+    Swal.fire({
+      title: "Selecciona la acción",
+      text: "Tarjeta seleccionada: " + title,
+      showDenyButton: true,
+      showCancelButton: true,
+      confirmButtonText: "Editar",
+      denyButtonText: "Eliminar",
+      cancelButtonText: "Cancelar"
+    }).then((result:any) => {
+      if (result.isConfirmed) {
+        this.editCard(id,title,desc,duration,stars,type);
+      } else if (result.isDenied) {
+        this.deleteCard(id,title);
+      }
+    });
+
+  }
+
   editCard(id: number, title: string,desc: string, duration: number, stars: number, type: string){
 
     Swal.fire({
