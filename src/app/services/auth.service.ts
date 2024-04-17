@@ -46,13 +46,16 @@ export class AuthService {
                         this.config.userDocument = document;
                         this.config.userSave = true;
                         this.setSave('true');
+                        this.setDocument(document);
                     }else{
                         this.setSave('false');
                         this.config.userDocument = '';
                         this.config.userSave = false;
+                        this.setDocument('');
                     }
 
                     this.config.userName = user.name;
+                    this.config.userSubname = user.subname;
                     this.config.userRol = user.rol;
 
                 }
@@ -202,7 +205,7 @@ export class AuthService {
         return token;
     }
 
-    getUser() {        
+    getUser() {
         return this.storageService.getUser();
     }
 
@@ -576,6 +579,14 @@ export class AuthService {
 
     getSave(){
         return this.storageService.getSave();
+    }
+
+    getDocument(){
+        return this.storageService.getDocument();
+    }
+
+    setDocument(value: string){
+        this.storageService.setDocument(value);
     }
 
     //Métodos para validar CI

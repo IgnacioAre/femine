@@ -44,8 +44,9 @@ export class LoginComponent implements OnInit {
       }, 120);
 
     });
+    
 
-    if(this.config.userToken != ''){
+    if(this.config.userToken !== '' && this.config.userToken !== undefined && this.config.userToken !== null){
       this._router.navigate(['/inicio']);
     }
     

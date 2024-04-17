@@ -114,11 +114,31 @@
 }
 
 .fondoServicios{
-    background-image: url('../../../assets/img/fondo_nebulosa.png');
     background-attachment: fixed;
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
+}
+
+.fondo-nebulosa-lg{
+    background-image: url('../../../assets/img/fondo_nebulosa.png');
+}
+
+
+.fondo-nebulosa-sm{
+    background-image: url('../../../assets/img/fondo_nebulosa_sm.png');
+}
+
+
+.titulo-user{
+    text-shadow: 0 0 1px #fff;
+    color: var(--violet-dark);
+    font-weight: bold;
+    font-size: 27pt;
+    font-family: 'Dancing Script', cursive !important;
+    position: absolute;
+    left: 180px;
+    top: -70px;
 }
 
 @media screen and (max-width: 1200px) {
@@ -142,19 +162,50 @@
         }
 
     }
+
+    .titulo-user{
+        left: 120px;
+        font-size: 22pt;
+    }
+}
+
+@media screen and (max-width: 615px) {
     
+    .menuContacto{
+        h2{
+           font-size: 18pt;
+           margin-bottom: 40px;
+           text-align: center;
+           width: 100%;
+        }
+   }
+
+    .button{
+        width: 100%;
+    }
+
+}
+
+
+@media screen and (max-width: 540px) {
+    
+    .cardServicio{
+        width: 98%;
+    }
+
+    .titulo-user{
+        left: 20px;
+        width: 100%;
+        text-align: center;
+    }
+
 }
 
 
 @media screen and (max-width: 425px) {
 
-    .menuContacto{
-         h2{
-            font-size: 18pt;
-            margin-bottom: 40px;
-            text-align: center;
-            width: 100%;
-         }
+    .titulo-user{
+        font-size: 18pt;
     }
 
     #fotoPortada_2{
@@ -163,14 +214,6 @@
 
     #fotoPortada_3{
         display: none;
-    }
-
-    .cardServicio{
-        width: 98%;
-    }
-
-    .button{
-        width: 100%;
     }
 
     .portadaFotos {

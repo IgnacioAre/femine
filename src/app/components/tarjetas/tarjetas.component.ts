@@ -27,8 +27,11 @@ export class TarjetasComponent {
 
     let name_split = [];
 
-    if(this.client.name.indexOf(' ') > -1){
-       name_split = this.client.name.split(' ');
+    let complete_name = this.client.name + this.client.subname;
+
+    if(complete_name.indexOf(' ') > -1){
+      
+       name_split = (this.client.name + this.client.subname).split(' ');
 
        name_split.forEach((n:any) => {
           this.name_capitalize += n[0].toUpperCase() + n.slice(1).toLowerCase() + ' ';

@@ -20,8 +20,11 @@ export class CreateCardComponent implements OnInit {
   public selectedValue: string = '';
   public cardCreated = false;
   public inputPassword = true;
+  public window_width = 0;
 
   constructor(private _router: Router, private authService: AuthService){
+    this.window_width = $(window).width();
+    
     this.card = new CardCreate('','','','','');
   }
 

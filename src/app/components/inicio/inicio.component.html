@@ -1,6 +1,12 @@
 <main [style]="{'background-image':'url(\'../../../assets/img/fondoVioletaMovimiento.svg\')'}">
 
+
+    <div class="position-relative">
+        <p *ngIf="config.userName !== undefined && config.userName !== ''" class="titulo-user">Bienvenid@ {{name_capitalize}}</p>
+    </div>
+
     <div class="portadaFotos d-flex flex-wrap">
+
          <picture>
             <img class="fotoPortada border-end border-bottom position-top" id="fotoPortada_1" data-aos="fade-up" data-aos-delay="300" src="../../../assets/img/foto_portada_1.png" alt="Bacha para lavar el pelo y productos">
         </picture>
@@ -15,21 +21,21 @@
     <div [style]="{'background-color':config.backgroundTransparent}" class="menuContacto py-4 px-2 px-lg-5 d-flex justify-content-between align-items-center flex-wrap border-top">
         
         <h2 class="pt-3">
-            ✨ <span>Verse Bien Para Sentirse Bien</span> ✨
+            <img class="me-3" src="../../../assets/img/stars.png" width="30px" alt=""> <span [ngClass]="{'fs-5': window_width < 400, 'fs-2': window_width > 700}">Verse Bien Para Sentirse Bien</span> <img class="ms-3" src="../../../assets/img/stars.png" width="30px" alt="">
         </h2>
 
         <div class="d-flex justify-content-end align-items-center flex-wrap pb-4 pb-md-0">
-            <a class="d-flex justify-content-center align-items-center button mx-3 mx-0 m-md-auto mt-md-0 bg-light activeLinkVioletDark" [style]="{'box-shadow':'0px 0px 10px ' + config.baseColorDark}" href="https://www.instagram.com/feminebeautysalon/" target="_blank">
+            <a class="d-flex justify-content-center align-items-center button pe-3 mx-3 m-md-auto mt-md-0 bg-light activeLinkVioletDark" [style]="{'box-shadow':'0px 0px 10px ' + config.baseColorDark}" href="https://www.instagram.com/feminebeautysalon/" target="_blank">
                 <img src="../../../assets/img/instagram.svg" alt="Instagram" width="35px" class="me-2">
                 Instagram
             </a>
     
-            <a class="d-flex justify-content-center align-items-center button mx-3 mx-0 me-md-3 mt-2 mt-md-0 bg-light activeLinkVioletDark" [style]="{'background-color':config.baseColorDark,'box-shadow':'0px 0px 10px ' + config.baseColorDark}" href="https://wa.me/+59899900913" target="_blank">
+            <a class="d-flex justify-content-center align-items-center button pe-3 mx-3 mx-0 me-md-3 mt-2 mt-md-0 bg-light activeLinkVioletDark" [style]="{'background-color':config.baseColorDark,'box-shadow':'0px 0px 10px ' + config.baseColorDark}" href="https://wa.me/+59899900913" target="_blank">
                 <img src="../../../assets/img/whatsapp.svg" alt="Whatsapp" width="35px" class="me-2">
                 Whatsapp
             </a>
     
-            <a class="d-flex justify-content-center align-items-center button ps-4 ps-md-2 mx-3 mx-0 m-md-0 mt-2 mt-md-0 bg-light activeLinkVioletDark" [style]="{'background-color':config.baseColorDark,'box-shadow':'0px 0px 10px ' + config.baseColorDark}" href="https://maps.app.goo.gl/JacpTi91K16J6JCi8" target="_blank">
+            <a class="d-flex justify-content-center align-items-center button pe-3 ps-4 ps-md-2 mx-3 mx-0 m-md-0 mt-2 mt-md-0 bg-light activeLinkVioletDark" [style]="{'background-color':config.baseColorDark,'box-shadow':'0px 0px 10px ' + config.baseColorDark}" href="https://maps.app.goo.gl/JacpTi91K16J6JCi8" target="_blank">
                 <img src="../../../assets/img/maps.svg" alt="Ubicación" width="35px" class="me-2">
                 Como llegar
             </a>
@@ -43,21 +49,21 @@
         <section class="col col-12 col-md-6 col-lg-7">
 
             <article class="bg-light shadow rounded p-4" [style]="{'border':'4px dashed ' + config.baseColorLight}">
-                <h2>¿Quién soy?</h2>
+                <h2 class="activeLinkVioletDark">¿Quién soy?</h2>
                 <p>
-                    Mi nombre es Geraldine, me recibí en 2022 de peluquera/maquilladora y en marzo de 2023 tuve la linda oportunidad de poder abrir mi salón, estoy feliz de mostrarles mis trabajos y logros para que puedan ser parte de este proceso. Son bienvenida/os a darse un mimo 💗
+                    Mi nombre es Geraldine, me recibí en 2022 de peluquera/maquilladora y en marzo de 2023 tuve la linda oportunidad de poder abrir mi salón, estoy feliz de mostrarles mis trabajos y logros para que puedan ser parte de este proceso. Son bienvenid@s a darse un mimo 💗
                 </p>
             </article>
 
             <article class="bg-light shadow rounded p-4 mt-4" [style]="{'border':'4px dashed ' + config.baseColorLight}">
-                <h2>Me preocupo por tí 🥰</h2>
+                <h2 class="activeLinkVioletDark">Me preocupo por tí 🥰</h2>
                 <p>
                     En mi peluquería, me preocupo por tu comodidad y satisfacción. Te ofrecezco un ambiente acogedor y relajante donde puedes disfrutar de un momento de mimos y cuidado personal.
                 </p>
             </article>
 
-            <article class="shadow rounded p-4 mt-4 fondoServicios">
-                <h2 class="text-light">Servicios</h2>
+            <article id="containerServicios" class="shadow rounded p-4 mt-4 fondoServicios" [ngClass]="{'fondo-nebulosa-lg' : window_width > 700,'fondo-nebulosa-sm' : window_width < 700}">
+                <h2 class="text-white">Servicios</h2>
 
                 <div class="row">
 
@@ -142,8 +148,8 @@
     
         <aside class="col col-12 col-md-6 col-lg-5 mt-4 mt-md-0">
 
-            <article class="bg-light shadow rounded p-4" [style]="{'border':'4px dashed ' + config.baseColorLight}">
-                <h2>Métodos de Pago</h2>
+            <article id="containerMetodosPago" class="bg-light shadow rounded p-4" [style]="{'border':'4px dashed ' + config.baseColorLight}">
+                <h2 class="activeLinkVioletDark">Métodos de Pago</h2>
                 <p>
                     <img src="../../../assets/img/pago-efectivo.svg" alt="Dinero efectivo" width="50px" class="me-2">
                     Efectivo
@@ -158,8 +164,8 @@
                 </p>
             </article>
 
-            <article class="bg-light shadow rounded p-4 mt-4" [style]="{'border':'4px dashed ' + config.baseColorLight}">
-                <h2>¿Dónde me encuentro?</h2>
+            <article id="containerUbicacion" class="bg-light shadow rounded p-4 mt-4" [style]="{'border':'4px dashed ' + config.baseColorLight}">
+                <h2 class="activeLinkVioletDark">¿Dónde me encuentro?</h2>
                 <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3406.6674066610985!2d-57.97284652421337!3d-31.3681559939217!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95adc2dd75530469%3A0xd15e1a20c6ee6f49!2sDr.%20Chiazzaro%201888%2C%2050000%20Salto%2C%20Departamento%20de%20Salto!5e0!3m2!1ses-419!2suy!4v1702690700245!5m2!1ses-419!2suy" width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                 <div class="row mt-2">
                     <span class="col col-12 col-md-8">Chiazzaro 1888. Departamento de Salto, Uruguay</span>
@@ -167,17 +173,22 @@
                 </div>
             </article>
 
-            <article class="bg-light shadow rounded p-4 mt-4" [style]="{'border':'4px dashed ' + config.baseColorLight}">
-                <h2>Información General</h2>
+            <article id="containerInformacionGeneral" class="bg-light shadow rounded p-4 mt-4" [style]="{'border':'4px dashed ' + config.baseColorLight}">
+                <h2 class="activeLinkVioletDark">Información General</h2>
                 <p class="d-flex align-items-center">
                     <img src="../../../assets/img/info-calendar.svg" alt="Horario" width="40px" class="me-2">
                     <span class="me-2">Trabajamos por agenda. <a href="https://wa.me/+59899900913" class="text-dark" target="_blank">Pedí tu reserva aquí</a></span>
                 </p>
-                <p class="d-flex align-items-center">
+                <div class="d-flex align-items-start">
                     <img src="../../../assets/img/info-time.svg" alt="Horario" width="40px" class="me-2">
-                    <span class="me-2">Horarios:</span>
-                    <span class="text-secondary">09:00 - 12:00 y 17:00 - 20:00</span>
-                </p>
+                    <div class="d-flex mt-2">
+                        <p class="me-2">Horarios:</p>
+                        <div> 
+                            <p class="text-secondary">09:00 - 12:00</p>
+                            <p class="text-secondary">17:00 - 20:00</p>
+                        </div>
+                    </div>
+                </div>
                 <p class="d-flex align-items-center">
                     <img src="../../../assets/img/info-phone.svg" alt="Teléfono" width="40px" class="me-2">
                     <span class="me-2">Teléfono:</span>
@@ -190,28 +201,55 @@
                 </p>
             </article>
 
-            <article *ngIf="count_cards > 0" class="bg-light shadow rounded p-4 mt-4" [style]="{'border':'4px dashed ' + config.baseColorLight}">
-                <div class="d-flex justify-content-between">
-                    <h2 class="pb-0">Beneficios Disponibles</h2>
+            <article id="containerBeneficios" *ngIf="count_cards > 0" class="bg-light shadow rounded p-2 p-md-4 mt-4" [style]="{'border':'4px dashed ' + config.baseColorLight}">
+                <div class="d-flex justify-content-between pt-3 pt-md-2 ps-3 ps-md-2 pe-3 pe-md-2">
+                    <h2 class="pb-0 activeLinkVioletDark">Beneficios Disponibles</h2>
                     <a *ngIf="config.userRol === 'USER'" href="/tarjetas" class="fw-bold activeLinkVioletDark pt-2">Mis Tarjetas</a>
                 </div>
 
-                <!-- Lógica cards -->
-                <div class="container-card w-100"  [ngClass]="{'mt-4': card.type != 'Giftcard'}" *ngFor="let card of cards;let position_card=index">
-                    <div *ngIf="card.type != 'Giftcard'" class="title-card px-4 pb-1 pt-3 d-flex justify-content-between">
-                        <p class="fs-5 fw-bold"><i class="bi bi-award"></i> {{card.title}}</p>
-                    </div>
-                    <div *ngIf="card.type != 'Giftcard'" class="p-4">
-                        <p class="congratulations-card fs-4">Gracias <span class="d-inline-block border-bottom w-75 ms-2 ps-2 fs-6"></span></p>
-                        <p class="text-end congratulations-card fs-5">por confiar en nuestro trabajo.</p>
-                        <div class="d-flex align-items-center justify-content-between gap-2 flex-wrap py-1 mb-3">
-                            <span *ngFor="let num of number_stars[position_card];let position=index" class="marked-star" [ngClass]="{'violet-star': card.type == 'Objetivo' && (position + 1) == card.stars}"></span>
+                <!-- GIFT CARD Muestra-->
+
+                    <!-- Lógica cards -->
+                    <div class="container-card w-100 m-auto">
+                        <div class="title-card px-4 pb-1 pt-3 d-flex justify-content-between">
+                            <p [ngClass]="{'fs-6': window_width < 700, 'fs-5': window_width > 700}" class="fw-bold w-75"><i class="bi bi-gift"></i> GIFT CARD</p>
                         </div>
-                        <p class="description-card fw-bold">{{card.desc}}</p>
-                        <small class="description-card mt-4 text-uppercase d-block text-center">{{ 'Tarjeta válida por ' + card.duration + ' días desde ' }}<span class="ms-4 me-3">/</span><span class="mx-3">/</span></small>
+                        <div class="p-4">
+                            <p [ngClass]="{'fs-55': window_width < 700,'fs-4': window_width > 700}" class="congratulations-card text-center mb-4">Que disfrutes tu regalo, te quiero mucho!</p>
+                            <div class="d-flex justify-content-center align-items-center gap-3 pb-4 pt-3">
+                                <span [ngClass]="{'fs-sm': window_width < 700}" class="fw-bold description-card w-25">VALE POR:</span>
+                                <span [ngClass]="{'fs-md': window_width < 700}" class="bg-white rounded-pill p-3 w-75"></span>
+                            </div>
+                            <div class="d-flex justify-content-center align-items-center gap-3">
+                                <span [ngClass]="{'fs-sm': window_width < 700}" class="fw-bold description-card w-25">DE PARTE DE:</span>
+                                <span [ngClass]="{'fs-md': window_width < 700}" class="bg-white rounded-pill p-3 w-75"></span>
+                            </div>
+                            <small class="description-card mt-4 text-uppercase d-block text-center">Válido hasta el <span class="ms-4 me-3">/</span><span class="mx-3">/</span></small>
+                        </div>
+                    </div>
+
+                <!-- Fin GIFT CARD -->
+
+                <!-- Lógica cards -->
+                <div *ngFor="let card of cards;let position_card=index">
+                    <div class="container-card w-100 m-auto" *ngIf="card.type != 'Giftcard'" [ngClass]="{'mt-4': card.type != 'Giftcard'}">
+                        <div *ngIf="card.type != 'Giftcard'" class="title-card px-4 pb-1 pt-3 d-flex justify-content-between">
+                            <p class="fs-5 fw-bold"><i class="bi bi-award"></i> {{card.title}}</p>
+                        </div>
+                        <div *ngIf="card.type != 'Giftcard'" class="p-4">
+                            <p class="congratulations-card fs-4">Gracias <span class="d-inline-block border-bottom w-75 ms-2 ps-2 fs-6"></span></p>
+                            <p class="text-end congratulations-card fs-5">por confiar en nuestro trabajo.</p>
+                            <div class="d-flex align-items-center gap-3 flex-wrap py-1 mb-3 m-auto">
+                                <span *ngFor="let num of number_stars[position_card];let position=index" class="marked-star cursor-default" [ngClass]="{'violet-star': card.type == 'Objetivo' && (position + 1) == card.stars}"></span>
+                            </div>
+                            <p class="description-card fw-bold">{{card.desc}}</p>
+                            <small class="description-card mt-4 text-uppercase d-block text-center">{{ 'Tarjeta válida por ' + card.duration + ' días desde ' }}<span class="ms-3 ms-md-4 me-2 me-md-3">/</span><span class="mx-3">/</span></small>
+                        </div>
                     </div>
                 </div>
+                
                 <!-- Fin lógica cards -->
+
             </article>
         </aside>
 

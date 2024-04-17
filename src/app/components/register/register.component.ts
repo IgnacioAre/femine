@@ -20,8 +20,11 @@ export class RegisterComponent implements OnInit {
   public selectedValue: string = '';
   public clienteCreado = false;
   public inputPassword = true;
+  public window_width = 0;
 
   constructor(private _router: Router, private authService: AuthService){
+    this.window_width = $(window).width();
+
     this.user = new UserRegister('','','','');
   }
 

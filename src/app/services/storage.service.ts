@@ -12,6 +12,7 @@ export class StorageService {
     private saveKey: string = 'userSave';
     private colorsKey: string = 'colors';
     private userUpdateKey: string = 'userUpdate';
+    private saveDocument: string = 'userDocument'
     private config = Configuracion;
 
 
@@ -49,6 +50,14 @@ export class StorageService {
         return localStorage.getItem(this.saveKey);
     }
 
+    setDocument(value: string){
+        localStorage.setItem(this.saveDocument,value);
+    }
+
+    getDocument(){
+        return localStorage.getItem(this.saveDocument);
+    }
+
     remove() {
         localStorage.removeItem(this.tokenKey);
         if(!this.config.userSave){
@@ -57,6 +66,8 @@ export class StorageService {
             localStorage.setItem(this.userKey,JSON.stringify({'document':this.config.userDocument}));
         }
         this.config.userToken = '';
+        this.config.userName = '';
+        this.config.userSubname = '';
     }
 
 }

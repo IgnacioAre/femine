@@ -13,9 +13,12 @@ declare const AOS: any;
 export class AdminComponent implements OnInit {
 
   public config:any = Configuracion;
+  public window_width = 0;
 
   constructor(private authService: AuthService){
 
+    this.window_width = $(window).width();
+    
   }
 
   ngOnInit(): void {

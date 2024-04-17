@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
 import { Configuracion } from 'src/app/models/configuracion';
-import DataTable from 'datatables.net-dt';
 import { AuthService } from 'src/app/services/auth.service';
-import 'datatables.net-responsive-dt';
+import * as htmlToImage from 'html-to-image';
 
 declare const $: any;
 declare const Swal: any;
@@ -16,9 +15,9 @@ export class GestionTarjetasComponent {
 
   public config:any = Configuracion;
   public cardsCount = -1;
-  public table:any;
   public cards:any = [];
   public window_width = 0;
+  public number_stars:any = [];
 
   constructor(private authService: AuthService){
 
@@ -28,15 +27,13 @@ export class GestionTarjetasComponent {
     this.cardsCount = this.cards.length;
 
     if(this.cardsCount > 0){
-      setTimeout(() => {
-        this.table = new DataTable('#tablaGestionTarjetas', {
-          responsive: true,
-          language: {
-            url: '../../assets/js/spanish_datatable.json'
-          },
-          order: [[0, 'asc']]
-        });
-      }, 200);
+        for (let index = 0; index < this.cards.length; index++) {
+          const element = this.cards[index];
+          this.number_stars[index] = Array(this.cards[index].stars).fill(0).map((x,i)=>i);
+        }
+
+        console.log(this.number_stars);
+        
     }
 
   }
@@ -236,5 +233,55 @@ export class GestionTarjetasComponent {
     return str.substring(0,3).toUpperCase();
 
   }
+
+  downloadImage(id: number){
+
+    $('#edit_card_'+id).fadeOut('fast');
+    $('#download_card_'+id).fadeOut('fast');
+    $('#delete_card_'+id).fadeOut('fast');
+    $('#title_card_'+id).addClass('w-100');
+    $('#action_card_'+id).removeClass('w-25');
+    $('#water_mark_'+id).addClass('opacity-01');
+    
+    setTimeout(() => {
+      
+      var node:any = document.getElementById('card_'+id);
+
+      htmlToImage.toPng(node)
+        .then(function (dataUrl:any) {        
+          var link = document.createElement("a");
+
+          document.body.appendChild(link);
+
+          link.setAttribute("href", dataUrl);
+          link.setAttribute("download", "Tarjeta-Femine.png");
+          link.click();
+
+        })
+        .catch(function (error:any) {
+
+          Swal.fire({
+            title: "Error",
+            text: "Ha ocurrido un error y no se ha podido descargar el archivo.",
+            icon: 'error'
+          });
+          console.error('oops, ocurrió un error.', error);
+
+        });
+
+        setTimeout(() => {
+          $('#edit_card_'+id).fadeIn();
+          $('#download_card_'+id).fadeIn();
+          $('#delete_card_'+id).fadeIn();
+          $('#title_card_'+id).removeClass('w-100');
+          $('#action_card_'+id).addClass('w-25');
+          $('#water_mark_'+id).addClass('d-none');
+        }, 500);
+
+
+    }, 500);
+    
+  }
+
 
 }

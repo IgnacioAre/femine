@@ -1,42 +1,46 @@
 <main [style]="{'background-image':'url(\'../../../assets/img/fondoVioletaMovimiento.svg\')'}">
 
     
-    <div class="overflow-hidden rounded mx-1 mx-md-5">
-        <h1 class="py-4 text-light d-flex justify-content-center position-relative mb-0" [style]="{'background-color':config.backgroundTitle,'border-bottom':'5px solid '+config.baseColorDark}"><span routerLink="/inicio" class="span-circle pt-4 ps-3 pt-md-0 ps-md-0 pb-md-4" matTooltip="Volver" role="button">⤶</span> Mis Tarjetas</h1>
+    <div class="overflow-hidden rounded mx-1 mx-md-4">
+        <h1 class="py-4 text-light d-flex justify-content-center position-relative mb-0" [style]="{'background-color':config.backgroundTitle,'border-bottom':'5px solid '+config.baseColorDark}"><span routerLink="/inicio" class="arrowBack pt-4 ps-3 pt-md-0 ps-md-0 pb-md-4" matTooltip="Volver" role="button">⤶</span> Mis Tarjetas</h1>
         <div class="overflow-hidden rounded">
-            <div [style]="{'background-color':config.backgroundLightTransparent}" class="d-flex gap-3 justify-content-around flex-wrap p-2 p-md-4 pt-3">
-                <h2 *ngIf="count_cards == 0" class="activeLinkVioletDark">Aún no se te han vinculado tarjetas.</h2>
-                <!-- Lógica cards -->
-                <div class="container-card position-relative" id="card_{{card.id_assigned}}" *ngFor="let card of cards;let position_card=index">
-                    <div class="title-card px-4 pb-1 pt-3 d-flex justify-content-between">
-                        <p id="title_card_{{card.id_assigned}}" *ngIf="card.type == 'Estandar' || card.type == 'Objetivo'" [ngClass]="{'fs-6': window_width < 700, 'fs-5': window_width > 700}" class="w-100 fw-bold"><i class="bi bi-award"></i> {{card.title}}</p>
-                        <p id="title_card_{{card.id_assigned}}" *ngIf="card.type == 'Giftcard'" [ngClass]="{'fs-6': window_width < 700, 'fs-5': window_width > 700}" class="fw-bold w-100"><i class="bi bi-gift"></i> GIFT CARD</p>
-                        <div id="action_card_{{card.id_assigned}}" class="w-25 d-flex gap-2 justify-content-end">
-                            <i id="download_card_{{card.id_assigned}}" (click)="downloadImage(card.id_assigned)" role="button" matTooltip="Descargar" class="bi bi-cloud-arrow-down fs-4 golden-icon-card me-2"></i>
+            <div [style]="{'background-color':config.backgroundLightTransparent}" class="pt-3 pb-5">
+
+                <div [ngClass]="{'w-100' : window_width < 700,'w-75' : window_width > 700}" class="d-flex flex-wrap gap-5 m-auto pt-3 px-2">
+                    <h2 *ngIf="count_cards == 0" class="activeLinkVioletDark">Aún no se te han vinculado tarjetas.</h2>
+                    <!-- Lógica cards -->
+                    <div class="container-card position-relative" id="card_{{card.id_assigned}}" *ngFor="let card of cards;let position_card=index">
+                        <div class="title-card px-4 pb-1 pt-3 d-flex justify-content-between">
+                            <p id="title_card_{{card.id_assigned}}" *ngIf="card.type == 'Estandar' || card.type == 'Objetivo'" [ngClass]="{'fs-6': window_width < 700, 'fs-5': window_width > 700}" class="w-100 fw-bold"><i class="bi bi-award"></i> {{card.title}}</p>
+                            <p id="title_card_{{card.id_assigned}}" *ngIf="card.type == 'Giftcard'" [ngClass]="{'fs-6': window_width < 700, 'fs-5': window_width > 700}" class="fw-bold w-100"><i class="bi bi-gift"></i> GIFT CARD</p>
+                            <div id="action_card_{{card.id_assigned}}" class="w-25 d-flex gap-2 justify-content-end">
+                                <i id="download_card_{{card.id_assigned}}" (click)="downloadImage(card.id_assigned)" role="button" matTooltip="Descargar" class="bi bi-cloud-arrow-down fs-4 golden-icon-card me-2"></i>
+                            </div>
                         </div>
+                        <div class="p-4">
+                            <p *ngIf="card.type == 'Estandar' || card.type == 'Objetivo'" class="congratulations-card fs-4">Gracias <span class="border-bottom mx-2 px-2 fs-6">{{name_capitalize}}</span></p>
+                            <p *ngIf="card.type == 'Estandar' || card.type == 'Objetivo'" class="text-end congratulations-card fs-5">por confiar en nuestro trabajo.</p>
+                            <p *ngIf="card.type == 'Giftcard'" [ngClass]="{'fs-4': window_width > 700}" class="congratulations-card fs-4 text-center mb-4">Que disfrutes tu regalo, te quiero mucho!</p>
+                            <div *ngIf="card.type == 'Estandar' || card.type == 'Objetivo'" class="d-flex align-items-center gap-3 flex-wrap py-1 mb-3 m-auto">
+                                <span *ngFor="let num of number_stars[position_card];let position=index" [ngClass]="{'unmarked-star no-action-star': (card.type == 'Objetivo' && (position + 1) < card.stars && (position + 1) > card.marked_stars) || (card.type != 'Objetivo' && (position + 1) > card.marked_stars),'marked-star': (position + 1) <= card.marked_stars, 'gray-star no-action-gray' : card.type == 'Objetivo' && (position + 1) == card.stars && (position + 1) != card.marked_stars, 'violet-star': card.type == 'Objetivo'  && (position + 1) == card.marked_stars && (position + 1) == card.stars}">{{ (((card.type == 'Objetivo' && (position + 1) < card.stars && (position + 1) > card.marked_stars) || (card.type != 'Objetivo' && (position + 1) > card.marked_stars) ) ? position + 1 : '') }}</span>
+                            </div>
+                            <p *ngIf="card.type == 'Estandar' || card.type == 'Objetivo'" [ngClass]="{'fs-md': window_width < 700}" class="description-card fw-bold">{{card.desc}}</p>
+                            <div *ngIf="card.type == 'Giftcard'" class="d-flex justify-content-center align-items-center gap-3 pb-4 pt-3">
+                                <span [ngClass]="{'fs-sm': window_width < 700}" class="fw-bold description-card w-25">VALE POR:</span>
+                                <span [ngClass]="{'fs-md': window_width < 700}" class="bg-white rounded-pill p-3 w-75">{{card.message_giftcard}}</span>
+                            </div>
+                            <div *ngIf="card.type == 'Giftcard'" class="d-flex justify-content-center align-items-center gap-3">
+                                <span [ngClass]="{'fs-sm': window_width < 700}" class="fw-bold description-card w-25">DE PARTE DE:</span>
+                                <span [ngClass]="{'fs-md': window_width < 700}" class="bg-white rounded-pill p-3 w-75">{{name_capitalize}}</span>
+                            </div>
+                            <small *ngIf="card.type == 'Estandar' || card.type == 'Objetivo'" class="description-card mt-4 text-uppercase d-block text-center">{{ 'Tarjeta válida por ' + card.duration + ' días desde ' + card.date_create }}</small>
+                            <small *ngIf="card.type == 'Giftcard'" class="description-card mt-4 text-uppercase d-block text-center" [ngClass]="{'fw-bold': card.status_giftcard == 1}">{{ (card.status_giftcard == 0) ? 'Válido hasta el ' + card.date_valide : 'Giftcard Utilizado' }}</small>
+                        </div>
+                        <img id="water_mark_{{card.id_assigned}}" src="../../../assets/img/femine.png" alt="Logo" class="water-mark">
                     </div>
-                    <div class="p-4">
-                        <p *ngIf="card.type == 'Estandar' || card.type == 'Objetivo'" class="congratulations-card fs-4">Gracias <span class="border-bottom mx-2 px-2 fs-6">{{name_capitalize}}</span></p>
-                        <p *ngIf="card.type == 'Estandar' || card.type == 'Objetivo'" class="text-end congratulations-card fs-5">por confiar en nuestro trabajo.</p>
-                        <p *ngIf="card.type == 'Giftcard'" [ngClass]="{'fs-6': window_width < 700, 'fs-4': window_width > 700}" class="congratulations-card fs-4 text-center mb-4">Que disfrutes tu regalo, te quiero mucho!</p>
-                        <div *ngIf="card.type == 'Estandar' || card.type == 'Objetivo'" class="d-flex align-items-center justify-content-between gap-2 flex-wrap py-1 mb-3">
-                            <span *ngFor="let num of number_stars[position_card];let position=index" [ngClass]="{'unmarked-star no-action-star': (card.type == 'Objetivo' && (position + 1) < card.stars && (position + 1) > card.marked_stars) || (card.type != 'Objetivo' && (position + 1) > card.marked_stars),'marked-star': (position + 1) <= card.marked_stars, 'gray-star no-action-gray' : card.type == 'Objetivo' && (position + 1) == card.stars && (position + 1) != card.marked_stars, 'violet-star': card.type == 'Objetivo'  && (position + 1) == card.marked_stars && (position + 1) == card.stars}">{{ (((card.type == 'Objetivo' && (position + 1) < card.stars && (position + 1) > card.marked_stars) || (card.type != 'Objetivo' && (position + 1) > card.marked_stars) ) ? position + 1 : '') }}</span>
-                        </div>
-                        <p *ngIf="card.type == 'Estandar' || card.type == 'Objetivo'" [ngClass]="{'fs-md': window_width < 700}" class="description-card fw-bold">{{card.desc}}</p>
-                        <div *ngIf="card.type == 'Giftcard'" class="d-flex justify-content-center align-items-center gap-3 mb-3">
-                            <span [ngClass]="{'fs-sm': window_width < 700}" class="fw-bold description-card w-25">VALE POR:</span>
-                            <span [ngClass]="{'fs-md': window_width < 700}" class="bg-white rounded-pill p-3 w-75">{{card.message_giftcard}}</span>
-                        </div>
-                        <div *ngIf="card.type == 'Giftcard'" class="d-flex justify-content-center align-items-center gap-3">
-                            <span [ngClass]="{'fs-sm': window_width < 700}" class="fw-bold description-card w-25">DE PARTE DE:</span>
-                            <span [ngClass]="{'fs-md': window_width < 700}" class="bg-white rounded-pill p-3 w-75">{{name_capitalize}}</span>
-                        </div>
-                        <small *ngIf="card.type == 'Estandar' || card.type == 'Objetivo'" class="description-card mt-4 text-uppercase d-block text-center">{{ 'Tarjeta válida por ' + card.duration + ' días desde ' + card.date_create }}</small>
-                        <small *ngIf="card.type == 'Giftcard'" class="description-card mt-4 text-uppercase d-block text-center" [ngClass]="{'fw-bold': card.status_giftcard == 1}">{{ (card.status_giftcard == 0) ? 'Válido hasta el ' + card.date_valide : 'Giftcard Utilizado' }}</small>
-                    </div>
-                    <img id="water_mark_{{card.id_assigned}}" src="../../../assets/img/femine.png" alt="Logo" class="water-mark">
+                    <!-- Fin lógica cards -->
                 </div>
-                <!-- Fin lógica cards -->
+
             </div>
         </div>
     </div>

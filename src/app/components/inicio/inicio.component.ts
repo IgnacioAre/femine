@@ -14,12 +14,16 @@ declare const AOS: any;
 })
 export class InicioComponent implements OnInit {
 
-  public config:any = Configuracion;
+public config:any = Configuracion;
   public cards:any = [];
   public count_cards: number = 0;
   public number_stars:any = [];
+  public window_width:any = 0;
+  public name_capitalize = '';
 
   constructor(private _router:Router, private authService: AuthService){
+
+    this.window_width = $(window).width();
 
     this.cards = this.authService.getCardsList();
     
@@ -30,6 +34,25 @@ export class InicioComponent implements OnInit {
         const element = this.cards[index];
         this.number_stars[index] = Array(this.cards[index].stars).fill(0).map((x,i)=>i);
       }
+    }
+    
+    if(this.config.userName !== undefined && this.config.userName !== ''){
+      
+      let complete_name = this.config.userName;
+      
+      let name_split = [];
+
+      if(complete_name.indexOf(' ') > -1){
+        name_split = complete_name.split(' ');
+
+        name_split.forEach((n:any) => {
+            this.name_capitalize += n[0].toUpperCase() + n.slice(1).toLowerCase() + ' ';
+        });
+
+      }else{
+          this.name_capitalize += complete_name[0].toUpperCase() + complete_name.slice(1).toLowerCase();
+      }
+
     }
 
   }

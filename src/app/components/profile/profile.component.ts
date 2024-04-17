@@ -45,13 +45,13 @@ export class ProfileComponent {
     }else{
       this.name_capitalize += complete_name[0].toUpperCase() + complete_name.slice(1).toLowerCase();
     }
-  
+    
     this.updateCards(id);
     
   }
 
   updateCards(id:number){
-    this.cards = this.authService.getUserCardsList(id);  
+    this.cards = this.authService.getUserCardsList(id);
     this.count_cards = this.cards.length;
     if(this.cards.length > 0){
       for (let index = 0; index < this.cards.length; index++) {
@@ -64,6 +64,7 @@ export class ProfileComponent {
   updateStars(id_assigned:number, card_position:number, star_position:number){
 
     let star = $('span[data-card="'+card_position+'"][data-value="'+star_position+'"]');
+    let value = 0;
       
       if(star.hasClass('unmarked-star')){
         
@@ -78,11 +79,35 @@ export class ProfileComponent {
 
         });
 
-      }
-      
-      if(star.hasClass('gray-star')){
+        value = star.data('value');
+
+      }else if(star.hasClass('marked-star')){
+
+        if(star.hasClass('violet-star')){
+          star.removeClass('marked-star').removeClass('violet-star').addClass('gray-star').text(star_position).text('');
+        }else{
+          star.removeClass('marked-star').addClass('unmarked-star').text(star_position);
+        }
+
+        $('.marked-star').map((index:number,element:any)=>{          
+
+          let element_marked = $('span[data-card="'+star.data('card')+'"][data-value="'+(star_position + index)+'"]');
+          
+          if(element_marked.data('value') > star.data('value')){
+            if(element_marked.hasClass('violet-star')){
+              element_marked.removeClass('marked-star').removeClass('violet-star').addClass('gray-star').text('');
+            }else{
+              element_marked.removeClass('marked-star').addClass('unmarked-star').text((star_position + index));
+            }
+          }
+
+        });
+
+        value = (parseInt(star.data('value')) - 1);
+
+      }else if(star.hasClass('gray-star')){
         
-        star.removeClass('gray-star').addClass('violet-star').text('');
+        star.removeClass('gray-star').addClass('marked-star').addClass('violet-star').text('');
 
         $('.unmarked-star').map((index:number,element:any)=>{
           let element_unmarked = $('span[data-card="'+star.data('card')+'"][data-value="'+element.innerText+'"]');
@@ -93,9 +118,11 @@ export class ProfileComponent {
 
         });
 
+        value = star.data('value');
+
       }
 
-      this.authService.updateNumberCard(id_assigned,star.data('value'));
+      this.authService.updateNumberCard(id_assigned,value);
 
   }
 
